@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Membr</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+<div class="header">
+  fdsa
+</div>
+
+<div class="home">
+    <div class="nav-panel">
+      <div class="nav-item">
+        Members
+      </div>
+      <div class="nav-item">
+        Memberships
+      </div>
+      <div class="nav-item">
+        Notifications
+      </div>
+      <div class="nav-item">
+        Import/Export
+      </div>
+      <div class="nav-item">
+        Settings
+      </div>
+    </div>
+  <div class="content">
+    <%= yield %>
+  </div>
+</div>
+
+<script type="text/javascript">
+
+  $(window).load(function() {
+      $('.home').css('height', $(window).height()-41);
+      $('.home').css('width', $(window).width());
+  });
+
+  $(window).resize(function() {
+    $('.home').css('height', $(window).height()-41);
+    $('.home').css('width', $(window).width());
+  });
+</script>
+
+</body>
+</html>

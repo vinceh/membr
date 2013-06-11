@@ -1,9 +1,96 @@
-<div class=  "inner memberships">
-  <% if @m.length == 0 %>
-    <h2>Create a new membership plan</h2>
-  <% end %>
-  <button class="btn">New Membership Plan</button>
-  <% @m.each do |m| %>
-    haro
-  <% end %>
+<%= render "members" %>
+
+<div class="inner memberships">
+  <div class="hidden-wrap" ng-class="membershipOpened && 'opened' || ''">
+    <div class="hidden-form" ng-form="newMembership">
+      <h2>A new membership plan</h2>
+
+      <div class="input-wrap">
+        <label>Name</label>
+        <input ng-model="membership.name" type="text" required>
+      </div>
+      <div class="input-wrap">
+        <label>Public?</label>
+        <div class="radio-wrap">
+          <input type="radio" name="public" id="radio-yes" checked="true" ng-model="membership.is_private" value="0"> <label for="radio-yes">Public</label>
+          <input type="radio" name="public" id="radio-no" ng-model="membership.is_private" value="1"> <label for="radio-no">Invite Only</label>
+        </div>
+      </div>
+      <div class="input-wrap">
+        <label>Recurring</label>
+        <div class="radio-wrap">
+          <input type="radio" name="fee" id="radio-anual" checked="true" ng-model="membership.renewal_period" value="1"><label for="radio-anual">Annually</label>
+          <input type="radio" name="fee" id="radio-quarter" ng-model="membership.renewal_period" value="2"><label for="radio-quarter">Quarterly</label>
+          <input type="radio" name="fee" id="radio-monthly" ng-model="membership.renewal_period" value="3"><label for="radio-monthly">Monthly</label>
+          <input type="radio" name="fee" id="radio-weekly" ng-model="membership.renewal_period" value="4"><label for="radio-weekly">Weekly</label>
+        </div>
+      </div>
+      <div class="input-wrap">
+        <label>Fee</label>
+        <span class="fee-span">$</span></label><input type="number" class="fee" ng-model="membership.fee" required>
+      </div>
+      <div class="submits">
+        <button class="btn-secondary close-hidden-form" ng-click="membershipOpened = false">Cancel</button>
+        <button class="btn" ng-click="createMembership()" ng-disabled="newMembership.$invalid || membershipCreating">Create</button>
+        <%= image_tag "ajax-loader.gif", "ng-show" => "membershipCreating" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="detail">
+    <h2 ng-show="memberships.length == 0">Create a new membership plan</h2>
+
+    <button class="btn new-membership-plan" ng-click="membershipOpened = true">New Membership Plan</button>
+    <div class="membership" ng-repeat="m in memberships">
+      <div class="details">
+        <div class="left">
+          <h2>{{ m.name }}</h2>
+          <p>Created {{ m.created_at }}</p>
+          <p>{{ m.is_private_text }} membership</p>
+          <p>
+            <button class="btn-secondary settings" ng-click="editMembership(m)"><%= image_tag "gear.png" %> Settings</button>
+          </p>
+        </div>
+        <div class="right">
+          <h2 class="fee">${{ m.fee }}/{{ m.renewal_period_text }}</h2>
+          <p>{{ m.members }} member{{ m.members != 1 && 's' }}</p>
+          <p>generating ${{ m.fee * m.members }}/{{ m.renewal_period_text }}</p>
+          <p>next billing on June 23, 2013</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="membership-edit member-form" ng-form="memberEditForm">
+    <div class="input-wrap">
+      <label>Name</label>
+      <input ng-model="memberEdit.name" type="text" required>
+    </div>
+    <div class="input-wrap">
+      <label>Public?</label>
+      <div class="radio-wrap">
+        <input type="radio" name="public" id="radio-edit-yes" checked="true" ng-model="memberEdit.is_private" value="0"> <label for="radio-edit-yes">Public</label>
+        <input type="radio" name="public" id="radio-edit-no" ng-model="memberEdit.is_private" value="1"> <label for="radio-edit-no">Invite Only</label>
+      </div>
+    </div>
+    <div class="input-wrap">
+      <label>Recurring</label>
+      <div class="radio-wrap">
+        <input type="radio" name="fee" id="radio-edit-anual" checked="true" ng-model="memberEdit.renewal_period" value="1"><label for="radio-edit-anual">Annually</label>
+        <input type="radio" name="fee" id="radio-edit-quarter" ng-model="memberEdit.renewal_period" value="2"><label for="radio-edit-quarter">Quarterly</label>
+        <input type="radio" name="fee" id="radio-edit-monthly" ng-model="memberEdit.renewal_period" value="3"><label for="radio-edit-monthly">Monthly</label>
+        <input type="radio" name="fee" id="radio-edit-weekly" ng-model="memberEdit.renewal_period" value="4"><label for="radio-edit-weekly">Weekly</label>
+      </div>
+    </div>
+    <div class="input-wrap">
+      <label>Fee</label>
+      <span class="fee-span">$</span></label><input type="number" class="fee" ng-model="memberEdit.fee" required>
+    </div>
+    <div class="submits">
+      <button class="btn-secondary close-edit-form" ng-click="membershipOpened = false">Cancel</button>
+      <button class="btn" ng-click="createMembership()" ng-disabled="memberEditForm.$invalid || membershipCreating">Save</button>
+      <%= image_tag "ajax-loader.gif", "ng-show" => "membershipCreating" %>
+    </div>
+  </div>
 </div>
+

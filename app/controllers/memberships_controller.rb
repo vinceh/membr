@@ -1,9 +1,12 @@
 class MembershipsController < ApplicationController
   protect_from_forgery
 
+  before_filter :authenticate_user!
+
   # API
   def create
     m = Membership.new(params[:membership])
+    m.user = current_user
 
     if m.save!
       render :json => success(m.to_json)
@@ -31,6 +34,17 @@ class MembershipsController < ApplicationController
     else
       render :json => error(m.errors)
     end
+  end
+
+  def get_all
+    memberships = current_user.memberships
+
+    returnee = []
+    memberships.each do |m|
+      returnee << m.to_json
+    end
+
+    render :json => returnee.to_json
   end
 
   # TODO

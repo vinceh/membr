@@ -5,7 +5,7 @@ class CreateMembership < ActiveRecord::Migration
       t.string        :name
       t.boolean       :is_private
       t.integer       :fee
-      t.string        :renewal_period
+      t.integer        :renewal_period
       t.timestamps
     end
   end

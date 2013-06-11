@@ -5,8 +5,13 @@
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
+
+  <%= javascript_include_tag "app" %>
+  <%= javascript_include_tag "http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js" %>
+  <%= javascript_include_tag "global" %>
+  <%= javascript_include_tag "jquery.tablesorter.min" %>
 </head>
-<body>
+<body ng-app="membr" ng-controller="AppCtrl">
 
 <div class="header">
   fdsa
@@ -14,7 +19,8 @@
 
 <div class="home">
     <div class="nav-panel">
-      <div class="nav-item">
+      <button ng-click="showScope()">Angular Scope</button>
+      <div class="nav-item active">
         Members
       </div>
       <div class="nav-item">

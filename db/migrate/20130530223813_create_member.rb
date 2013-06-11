@@ -1,7 +1,8 @@
 class CreateMember < ActiveRecord::Migration
   def up
-    create_table(:member) do |t|
+    create_table(:members) do |t|
       t.integer       :membership_id
+      t.string        :email
       t.string        :full_name
       t.string        :street_address
       t.string        :city
@@ -12,11 +13,9 @@ class CreateMember < ActiveRecord::Migration
       t.boolean       :developer
       t.timestamps
     end
-
-    add_column(:member, :data, :json)
   end
 
   def down
-    drop_table :member
+    drop_table :members
   end
 end

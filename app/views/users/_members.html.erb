@@ -1,0 +1,30 @@
+<div class="inner members">
+  <div class="detail">
+    <h2>all dat members</h2>
+
+    <table id="members">
+      <thead>
+        <tr>
+          <th>Membership</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Joined</th>
+          <th>Payment</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @members.each do |m| %>
+        <tr>
+          <td><%= m.membership.name %></td>
+          <td><%= m.full_name %></td>
+          <td><%= m.email %></td>
+          <td><%= m.phone %></td>
+          <td><%= m.created_at.strftime("%b %m, %Y") %></td>
+          <td>paid</td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

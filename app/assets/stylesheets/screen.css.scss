@@ -353,6 +353,7 @@ h3 {
 .members {
   padding-right: 30px;
   table {
+    margin-top: 50px;
     background-color: #f6f6f6;
     width: 100%;
     tr {
@@ -361,7 +362,7 @@ h3 {
         background-color: white;
       }
       &:hover td {
-        background-color: #ddd;
+        background-color: #e6e6e6;
       }
       th {
         font-weight: bold;

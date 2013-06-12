@@ -11,4 +11,16 @@ class Member < ActiveRecord::Base
       break random_token unless Member.where(create_token: random_token).exists?
     end
   end
+
+  def to_json
+    {
+      id: id,
+      full_name: full_name,
+      email: email,
+      phone: phone,
+      joined: created_at.strftime("%b %m, %Y"),
+      payment: "paid",
+      membership: membership.name
+    }
+  end
 end

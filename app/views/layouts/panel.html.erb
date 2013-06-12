@@ -13,6 +13,13 @@
 </head>
 <body ng-app="membr" ng-controller="AppCtrl">
 
+<div class="master-loader" ng-show="masterLoading">
+  <div class="wash"></div>
+  <div class="details">
+    loading your data<%= image_tag "ajax-loader.gif" %>
+  </div>
+</div>
+
 <div class="header">
   fdsa
 </div>
@@ -20,10 +27,10 @@
 <div class="home">
     <div class="nav-panel">
       <button ng-click="showScope()">Angular Scope</button>
-      <div class="nav-item active">
+      <div class="nav-item active" data-panel="members">
         Members
       </div>
-      <div class="nav-item">
+      <div class="nav-item" data-panel="memberships">
         Memberships
       </div>
       <div class="nav-item">

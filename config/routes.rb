@@ -11,4 +11,5 @@ Membr::Application.routes.draw do
   # API
   post 'api/v1/memberships/create' => 'memberships#create'
   get '/api/memberships/all' => 'memberships#get_all'
+  get '/api/members/all' => 'members#get_all'
 end

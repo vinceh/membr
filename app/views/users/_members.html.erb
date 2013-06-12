@@ -1,4 +1,4 @@
-<div class="inner members">
+<div class="inner panel members">
   <div class="detail">
     <h2>all dat members</h2>
 
@@ -14,16 +14,14 @@
         </tr>
       </thead>
       <tbody>
-        <% @members.each do |m| %>
-        <tr>
-          <td><%= m.membership.name %></td>
-          <td><%= m.full_name %></td>
-          <td><%= m.email %></td>
-          <td><%= m.phone %></td>
-          <td><%= m.created_at.strftime("%b %m, %Y") %></td>
-          <td>paid</td>
+        <tr ng-repeat="m in members">
+          <td>{{ m.membership }}</td>
+          <td>{{ m.full_name }}</td>
+          <td>{{ m.email }}</td>
+          <td>{{ m.phone }}</td>
+          <td>{{ m.joined }}</td>
+          <td>{{ m.payment }}</td>
         </tr>
-        <% end %>
       </tbody>
     </table>
   </div>

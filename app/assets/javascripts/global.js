@@ -8,7 +8,21 @@ $(document).on('click', '.close-edit-form', (function() {
 }));
 
 $(document).ready(function() {
-  $("#members").tablesorter({
-    headers: { 3: { sorter: false} }
+  $('.nav-item').click(function() {
+
+    var $this = $(this);
+
+    if ( !$this.hasClass('active') ) {
+      var items = $('.nav-panel .nav-item');
+      var currentPanel = $('.'+$('.nav-panel .active').attr('data-panel'));
+      var newPanel = $('.'+$this.attr('data-panel'));
+
+      items.removeClass('active');
+      $this.addClass('active');
+
+      currentPanel.fadeOut( function() {
+        newPanel.fadeIn();
+      });
+    }
   });
 });

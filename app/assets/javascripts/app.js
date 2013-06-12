@@ -2,15 +2,31 @@
 
 var app = angular.module('membr', ['membr.services', 'membr.directives']);
 
-function AppCtrl($scope, $location, $http, Membership) {
+function AppCtrl($scope, $location, $http, Membership, Member, $q, $timeout) {
   $http.defaults.headers.common ['X-CSRF-Token']=$('meta[name="csrf-token"]').attr('content');
 
+  $scope.masterLoading = true;
   // loading all the data
-  Membership.get_all().then(function(memberships) {
-    $scope.memberships = memberships;
+  var promises = [
+    Membership.get_all().then(function(memberships) {
+      $scope.memberships = memberships;
+    }),
 
+    Member.get_all().then(function(members) {
+      $scope.members = members;
+    })
+  ];
+
+  $q.all(promises).then( function() {
     // FIX THIS HACK
     $('.members').show();
+    $timeout(function(){
+      $("#members").tablesorter({
+        headers: { 3: { sorter: false} }
+      });
+    });
+
+    $scope.masterLoading = false;
   });
 
   $scope.membership = new Membership();
@@ -47,6 +63,20 @@ angular.module('membr.services', [], function ($provide) {
     }
 
     return Boardgame;
+  });
+
+  $provide.factory('Member', function ($http) {
+    var Member = function (data) {
+      angular.extend(this, data);
+    }
+
+    Member.get_all = function (page) {
+      return $http.get('/api/members/all').then(function (response) {
+        return response.data;
+      })
+    }
+
+    return Member;
   });
 
   $provide.factory('Membership', function ($http) {

@@ -48,6 +48,17 @@ function AppCtrl($scope, $location, $http, Membership, Member, $q, $timeout) {
   $scope.editMembership = function(m) {
     $scope.memberEdit = jQuery.extend({}, m);;
   }
+
+  $scope.openInvite = function() {
+    $scope.inviteWrapOpen = true;
+    $scope.invite = {
+      email: null,
+      membership: $scope.memberships[0].id
+    }
+    $timeout(function(){
+      $("#invite-membership").customSelect();
+    });
+  }
 }
 
 angular.module('membr.services', [], function ($provide) {

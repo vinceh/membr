@@ -9,7 +9,6 @@ $(document).on('click', '.close-edit-form', (function() {
 
 $(document).ready(function() {
   $('.nav-item').click(function() {
-
     var $this = $(this);
 
     if ( !$this.hasClass('active') ) {

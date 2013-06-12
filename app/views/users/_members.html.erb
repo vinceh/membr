@@ -1,8 +1,8 @@
 <div class="inner panel members">
   <div class="detail">
-    <h2>all dat members</h2>
+    <h2>You have {{ members.length }} members</h2>
 
-    <button class="btn" ng-click="openInvite = true">Invite someone</button>
+    <button class="btn" ng-click="openInvite()" ng-show="memberships.length > 0">Invite someone</button>
 
     <table id="members">
       <thead>
@@ -26,5 +26,21 @@
         </tr>
       </tbody>
     </table>
+  </div>
+</div>
+
+<div class="invite" ng-show="inviteWrapOpen">
+  <div class="wash"></div>
+  <div class="form-wrap" ng-form="inviteForm">
+    <h2>Invite someone new</h2>
+    <label for="invite-email">Email</label>
+    <input type="email" ng-model="invite.email" id="invite-email" required>
+    <label for="invite-membership">Invite for</label>
+    <select id="invite-membership" ng-model="invite.membership" ng-options="m.id as m.name for m in memberships">
+    </select>
+    <div class="submits">
+      <button class="btn-secondary" ng-click="inviteWrapOpen = false">Cancel</button>
+      <button class="btn" ng-disabled="inviteForm.$invalid">Send Invite</button>
+    </div>
   </div>
 </div>

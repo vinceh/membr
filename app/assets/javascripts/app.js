@@ -61,6 +61,19 @@ function AppCtrl($scope, $location, $http, Membership, Member, $q, $timeout) {
     });
 
   }
+
+  $scope.sendInvite = function(invite) {
+    $scope.sendingInvite = true;
+
+    Member.send_invite($scope.invite).then(function(data) {
+      $scope.sendingInvite = false;
+      $scope.inviteWrapOpen = false;
+      $scope.inviteSentClass = "show";
+      $timeout(function() {
+        $scope.inviteSentClass = "";
+      }, 2000);
+    });
+  }
 }
 
 angular.module('membr.services', [], function ($provide) {
@@ -85,6 +98,12 @@ angular.module('membr.services', [], function ($provide) {
 
     Member.get_all = function (page) {
       return $http.get('/api/members/all').then(function (response) {
+        return response.data;
+      })
+    }
+
+    Member.send_invite = function(invite) {
+      return $http.post('api/member/invite', {creatable: invite}).then(function (response) {
         return response.data;
       })
     }

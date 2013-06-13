@@ -1,9 +1,9 @@
 class MemberMailer < ActionMailer::Base
   default from: "c.tnecniv@gmail.com"
 
-  def send_invite(creatable, membership)
+  def send_invite(creatable)
     @creatable = creatable
-    @membership = membership
+    @membership = creatable.membership
     mail(:to => @creatable.email, :subject => "Membership Invite")
   end
 end

@@ -2,6 +2,7 @@ class Creatable < ActiveRecord::Base
 
   before_create :generate_token
   belongs_to :membership
+  attr_accessible :membership_id, :email
 
   protected
 

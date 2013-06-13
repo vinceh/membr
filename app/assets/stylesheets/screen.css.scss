@@ -451,6 +451,12 @@ h3 {
       button {
         margin-right: 3px;
       }
+      img {
+        height: 21px;
+        position: relative;
+        top: 7px;
+        left: 2px;
+      }
     }
   }
 }
@@ -458,4 +464,15 @@ h3 {
 .customSelect.customSelectHover {
   cursor: pointer;
   border: 1px solid #999;
+}
+
+.invite-sent {
+  margin-left: 10px;
+  opacity: 0;
+  @include font-light;
+  @include transition-property(opacity);
+  @include transition-duration(0.3s);
+  &.show {
+    opacity: 1;
+  }
 }

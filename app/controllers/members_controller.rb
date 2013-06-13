@@ -19,7 +19,10 @@ class MembersController < ApplicationController
     creatable = Creatable.new(params[:creatable])
 
     if creatable.save!
-
+      MemberMailer.send_invite(creatable).deliver
+      render :json => {success: true}
+    else
+      render :json => {success: false, message: "Failed to send invite"}
     end
   end
 end

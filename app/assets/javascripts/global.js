@@ -19,8 +19,8 @@ $(document).ready(function() {
       items.removeClass('active');
       $this.addClass('active');
 
-      currentPanel.fadeOut( function() {
-        newPanel.fadeIn();
+      currentPanel.fadeOut(200, function() {
+        newPanel.fadeIn(200);
       });
     }
   });

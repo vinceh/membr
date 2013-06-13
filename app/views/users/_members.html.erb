@@ -36,7 +36,7 @@
     <label for="invite-email">Email</label>
     <input type="email" ng-model="invite.email" id="invite-email" required>
     <label for="invite-membership">Invite for</label>
-    <select id="invite-membership" ng-model="invite.membership" ng-options="m.id as m.name for m in memberships">
+    <select id="invite-membership" ng-model="invite.membership_id" ng-options="m.id as m.name for m in memberships">
     </select>
     <div class="submits">
       <button class="btn-secondary" ng-click="inviteWrapOpen = false">Cancel</button>
@@ -44,3 +44,7 @@
     </div>
   </div>
 </div>
+
+<script type="text/javascript">
+  $("#invite-membership").customSelect();
+</script>

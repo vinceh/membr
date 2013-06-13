@@ -14,4 +14,12 @@ class MembersController < ApplicationController
 
     render :json => returnee.to_json
   end
+
+  def invite
+    creatable = Creatable.new(params[:creatable])
+
+    if creatable.save!
+
+    end
+  end
 end

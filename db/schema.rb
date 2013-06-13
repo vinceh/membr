@@ -30,8 +30,10 @@ ActiveRecord::Schema.define(:version => 20130608040722) do
 
   create_table "creatables", :force => true do |t|
     t.string   "token"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.string   "email"
+    t.integer  "membership_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
   create_table "members", :force => true do |t|

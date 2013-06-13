@@ -9,7 +9,12 @@ Membr::Application.routes.draw do
   root :to => "home#index"
 
   # API
-  post 'api/v1/memberships/create' => 'memberships#create'
+
+  # membership
+  post 'api/memberships/create' => 'memberships#create'
   get '/api/memberships/all' => 'memberships#get_all'
+
+  # member
+  post 'api/member/invite' => 'members#invite'
   get '/api/members/all' => 'members#get_all'
 end

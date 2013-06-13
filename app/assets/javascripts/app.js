@@ -53,11 +53,13 @@ function AppCtrl($scope, $location, $http, Membership, Member, $q, $timeout) {
     $scope.inviteWrapOpen = true;
     $scope.invite = {
       email: null,
-      membership: $scope.memberships[0].id
+      membership_id: $scope.memberships[0].id
     }
     $timeout(function(){
-      $("#invite-membership").customSelect();
+      $('#invite-membership').trigger('update');
+      $scope.inviteForm.$setPristine();
     });
+
   }
 }
 
@@ -103,7 +105,7 @@ angular.module('membr.services', [], function ($provide) {
       membership.is_private = membership.is_private && true || false
       membership.renewal_period = parseInt(membership.renewal_period);
 
-      return $http.post('api/v1/memberships/create', {membership: membership}).then(function (response) {
+      return $http.post('api/memberships/create', {membership: membership}).then(function (response) {
         return new Membership(response.data.membership);
       })
     }

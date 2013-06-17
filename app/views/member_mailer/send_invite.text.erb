@@ -1,1 +1,11 @@
 Hi there!
+
+You have received an invitation for <%= @membership.name %>.  Please follow the link below if you wish to accept this membership:
+
+<%= "http://localhost:3000"+invite_path(:token => @creatable.token) %>
+
+The link will expire in 14 days, so make sure you sign up before then.
+
+Thank you,
+
+Team Membr

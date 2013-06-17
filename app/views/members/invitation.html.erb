@@ -1,0 +1,31 @@
+<div class="container join">
+  <h1><%= @creatable.membership.name %></h1>
+  <span class="fee">
+    <span class="amount"><span class="dollar-sign">$</span><%= @creatable.membership.fee %></span>
+    <%= "/#{@creatable.membership.renewal_text}" %>
+  </span>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent lobortis metus dui, nec egestas nibh scelerisque in. </p>
+
+  <div class="invite-wrap">
+    <%= form_for @member, :url => members_create_path(:creatable_id => @creatable.id) do |f| %>
+      <%= f.error_messages %>
+      <div class="personal-info">
+        <h3>Personal Information</h3>
+        <%= f.text_field :full_name, :placeholder => "Full Name" %>
+        <%= f.text_field :email, :placeholder => "Email" %>
+        <%= f.text_field :phone, :placeholder => "Phone" %>
+        <br/>
+        <%= f.text_field :street_address, :placeholder => "Street Address" %>
+        <%= f.text_field :city, :placeholder => "City" %>
+        <%= f.text_field :state, :placeholder => "Province/State" %>
+        <%= f.text_field :zipcode, :placeholder => "Postal/Zip Code" %>
+        <%= f.text_field :country, :placeholder => "Country" %>
+      </div>
+      <div class="billing">
+        <h3>Billing</h3>
+        <p>You will be charged <span class="bold">$<%= "#{@creatable.membership.fee}/#{@creatable.membership.renewal_text}" %></span></p>
+      </div>
+      <%= f.submit "Submit", :class => "btn" %>
+    <% end %>
+  </div>
+</div>

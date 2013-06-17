@@ -14,6 +14,12 @@ $p: #57c2ff;
 $pd: #4597ca;
 $pl: #68caff;
 $bg: #f9f9f9;
+$error: #ff5757;
+$success: #71dd51;
+
+html, body {
+  height: 100%;
+}
 
 @mixin font-regular {
   font-family: "ProximaNovaRegular";
@@ -25,6 +31,10 @@ $bg: #f9f9f9;
 
 @mixin font-semibold {
   font-family: "ProximaNovaSemiBold";
+}
+
+@mixin shadow {
+  @include text-shadow(0 2px 0 white);
 }
 
 @mixin full-page {
@@ -39,6 +49,17 @@ $bg: #f9f9f9;
   @include full-page;
   background-color: $color;
   opacity: $opacity;
+}
+
+.bold {
+  font-weight: bold;
+  color: #444;
+}
+
+p {
+  @include font-light;
+  line-height: 1.7em;
+  color: #777;
 }
 
 input[type="text"], input[type="number"], input[type="email"], .customSelect {
@@ -61,7 +82,7 @@ input[type="text"], input[type="number"], input[type="email"], .customSelect {
   }
 }
 
-button {
+button, input[type="submit"] {
   @include font-regular;
   @include inline-block;
   padding: 8px 15px;
@@ -474,5 +495,103 @@ h3 {
   @include transition-duration(0.3s);
   &.show {
     opacity: 1;
+  }
+}
+
+.container {
+  width: 600px;
+  margin: 0 auto;
+}
+
+.join {
+  margin-top: 100px;
+  position: relative;
+  h1 {
+    line-height: 90px;
+    @include shadow;
+  }
+  .fee {
+    position: absolute;
+    right: 0;
+    top: 0;
+    @include font-light;
+    @include shadow;
+    .amount {
+      font-size: 70px;
+      position: relative;
+      @include font-regular;
+      color: #333;
+      .dollar-sign {
+        font-size: 15px;
+        position: absolute;
+        top: 8px;
+        left: -13px;
+        @include font-light;
+      }
+    }
+  }
+  p {
+    width: 80%;
+  }
+  .invite-wrap {
+    margin-bottom: 100px;
+    label {
+      display: block;
+      margin: 20px 0 8px;
+    }
+    input[type="text"] {
+      margin: 0;
+      width: 400px;
+    }
+    .personal-info, .billing {
+      h3 {
+        margin-top: 40px;
+        margin-bottom: 20px;
+      }
+      input {
+        display: block;
+        margin: 10px 0;
+      }
+    }
+    .btn {
+      margin-top: 20px;
+    }
+  }
+  .errorExplanation {
+    border: 1px dashed #aaa;
+    padding: 30px;
+    margin-top: 30px;
+    background-color: white;
+    h2 {
+      color: $error;
+      margin-bottom: 15px;
+    }
+    li {
+      @include font-light;
+      margin: 10px 0;
+    }
+  }
+}
+
+.message-wrap {
+  @include full-page;
+  .message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -100px;
+    margin-left: -200px;
+    width: 400px;
+    h2.error {
+      color: $error;
+      margin-bottom: 15px;
+    }
+    h2.success {
+      color: $success;
+      margin-bottom: 15px;
+    }
+    p {
+      margin-bottom: 10px;
+    }
   }
 }

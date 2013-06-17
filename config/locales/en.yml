@@ -3,3 +3,17 @@
 
 en:
   hello: "Hello world"
+  activerecord:
+    attributes:
+      member:
+        full_name: "Full Name"
+        zipcode: "Zip/Postal Code"
+        street_address: "Street Address"
+        state: "Province/State"
+    errors:
+      template:
+        header:
+          one: "Whoops!"
+          other: "Whoops!"
+        body: ""
+

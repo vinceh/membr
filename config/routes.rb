@@ -8,6 +8,11 @@ Membr::Application.routes.draw do
 
   root :to => "home#index"
 
+  get 'invitation/error' => 'members#invite_failure', :as => :invite_failure
+  get 'invitation/success' => 'members#invite_success', :as => :invite_success
+  get 'invitation/:token' => 'members#invitation', :as => :invite
+  post 'invitation/:token' => 'members#invitation', :as => :members_create
+
   # API
 
   # membership

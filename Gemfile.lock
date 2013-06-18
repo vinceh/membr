@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/stripe/stripe-ruby
+  revision: 2dbc700fc35c9f6191e274febcd283223fce7d9a
+  specs:
+    stripe (1.8.3)
+      multi_json (>= 1.0.4, < 2)
+      rest-client (~> 1.4)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -39,7 +47,6 @@ GEM
       json (~> 1.4)
       nokogiri (<= 1.5.0)
       uuidtools (~> 2.1)
-    bcrypt-ruby (3.0.1)
     bcrypt-ruby (3.0.1-x86-mingw32)
     better_errors (0.8.0)
       coderay (>= 1.0.0)
@@ -90,7 +97,6 @@ GEM
     mime-types (1.23)
     multi_json (1.7.4)
     multi_xml (0.4.2)
-    nokogiri (1.5.0)
     nokogiri (1.5.0-x86-mingw32)
     orm_adapter (0.4.0)
     paperclip (3.4.1)
@@ -126,6 +132,8 @@ GEM
     rake (10.0.4)
     rdoc (3.12.2)
       json (~> 1.4)
+    rest-client (1.6.7)
+      mime-types (>= 1.16)
     sass (3.2.9)
     sass-rails (3.2.6)
       railties (~> 3.2.0)
@@ -167,4 +175,5 @@ DEPENDENCIES
   pg
   rails (= 3.2.13)
   sass-rails (~> 3.2.3)
+  stripe!
   uglifier (>= 1.0.3)

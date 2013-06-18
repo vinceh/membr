@@ -12,6 +12,7 @@ gem 'aws-s3'
 gem 'aws-sdk'
 gem 'angularjs-rails'
 gem "dynamic_form"
+gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
 
 group :development do
   gem "better_errors"

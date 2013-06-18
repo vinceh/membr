@@ -21,7 +21,7 @@ class MembersController < ApplicationController
         @member.developer = false
         @member.membership = membership
         if @member.save
-          creatable.destroy
+          # creatable.destroy
           redirect_to :action => :invite_success
         end
       end

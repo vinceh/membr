@@ -17,10 +17,6 @@ $bg: #f9f9f9;
 $error: #ff5757;
 $success: #71dd51;
 
-html, body {
-  height: 100%;
-}
-
 @mixin font-regular {
   font-family: "ProximaNovaRegular";
 }
@@ -571,6 +567,14 @@ h3 {
       margin: 10px 0;
     }
   }
+  .stripe-button-el {
+    &:active {
+      padding: 0;
+      span {
+        border: 1px solid #008cdd;
+      }
+    }
+  }
 }
 
 .message-wrap {
@@ -595,3 +599,10 @@ h3 {
     }
   }
 }
+
+.stripe {
+  position: relative;
+  top: 9px;
+  left: 5px;
+}
+

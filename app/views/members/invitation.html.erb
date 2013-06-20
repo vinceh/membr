@@ -116,7 +116,13 @@
         <h3>Billing</h3>
         <p>You will be charged <span class="bold">$<%= "#{@creatable.membership.fee}/#{@creatable.membership.renewal_text}" %></span></p>
       </div>
-      <%= f.submit "Submit", :class => "btn" %>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent lobortis metus dui, nec egestas nibh scelerisque in. </p>
+      <script src="https://checkout.stripe.com/v2/checkout.js" class="stripe-button"
+              data-key="pk_test_3v97jDIcjFOnVPo1oz5ohyRo"
+              data-amount="<%= @creatable.membership.fee*100 %>"
+              data-description="<%= @creatable.membership.name + " - #{@creatable.membership.fee}/#{@creatable.membership.renewal_text}"%>"></script>
+      <%= image_tag "outline.png", :class => "stripe" %>
+      <!--<%= f.submit "Submit", :class => "btn" %>-->
     <% end %>
   </div>
 </div>

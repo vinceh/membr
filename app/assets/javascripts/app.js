@@ -42,6 +42,7 @@ function AppCtrl($scope, $location, $http, Membership, Member, $q, $timeout) {
       $scope.membership = new Membership();
       $scope.membershipOpened = false;
       $scope.memberships.unshift(membership);
+      $scope.newMembership.$setPristine();
     });
   }
 

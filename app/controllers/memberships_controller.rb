@@ -9,6 +9,14 @@ class MembershipsController < ApplicationController
     m.user = current_user
 
     if m.save!
+      Stripe::Plan.create(
+        :amount => m.fee*100,
+        :interval => m.get_interval,
+        :interval_count => m.get_interval_count,
+        :name => m.name,
+        :currency => 'cad',
+        :id => m.id
+      )
       render :json => success(m.to_json)
     else
       render :json => error(m.errors)

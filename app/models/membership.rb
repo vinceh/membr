@@ -9,15 +9,51 @@ class Membership < ActiveRecord::Base
   validates :fee, :numericality => { :greater_than_or_equal_to   => 0 }
 
   validates_each :renewal_period do |record, attr, value|
-    record.errors.add(attr, ' is invalid') if !RENEWAL_PERIODS.has_value?(value)
+    valid = false
+
+    RENEWAL_PERIODS.each do |k, v|
+      valid = valid || v[:value] == value
+    end
+
+    unless valid
+      record.errors.add(attr, ' is invalid')
+    end
   end
 
   RENEWAL_PERIODS = {
-    ANNUALLY: 1,
-    QUARTERLY: 2,
-    MONTHLY: 3,
-    WEEKLY: 4
+    ANNUALLY: {
+      value: 1,
+      stripe: 'year',
+      interval: 1
+    },
+    QUARTERLY: {
+      value: 2,
+      stripe: 'month',
+      interval: 3
+    },
+    MONTHLY: {
+      value: 3,
+      stripe: 'month',
+      interval: 1
+    },
+    WEEKLY: {
+      value: 1,
+      stripe: 'week',
+      interval: 1
+    }
   }
+
+  def get_interval
+    RENEWAL_PERIODS.each do |k, v|
+      return v[:stripe] if v[:value] == renewal_period
+    end
+  end
+
+  def get_interval_count
+    RENEWAL_PERIODS.each do |k, v|
+      return v[:interval] if v[:value] == renewal_period
+    end
+  end
 
   def to_json
     {
@@ -42,13 +78,13 @@ class Membership < ActiveRecord::Base
   end
 
   def renewal_text
-    if renewal_period == RENEWAL_PERIODS[:ANNUALLY]
+    if renewal_period == RENEWAL_PERIODS[:ANNUALLY][:value]
       "annum"
-    elsif renewal_period == RENEWAL_PERIODS[:QUARTERLY]
+    elsif renewal_period == RENEWAL_PERIODS[:QUARTERLY][:value]
       "quarter"
-    elsif renewal_period == RENEWAL_PERIODS[:MONTHLY]
+    elsif renewal_period == RENEWAL_PERIODS[:MONTHLY][:value]
       "month"
-    elsif renewal_period == RENEWAL_PERIODS[:WEEKLY]
+    elsif renewal_period == RENEWAL_PERIODS[:WEEKLY][:value]
       "week"
     end
   end

@@ -13,6 +13,10 @@ Membr::Application.routes.draw do
   get 'invitation/:token' => 'members#invitation', :as => :invite
   post 'invitation/:token' => 'members#invitation', :as => :members_create
 
+  # Stripe Webhook
+  post '/stripe-event' => 'events#stripe_event'
+  get '/test-stripe' => 'events#test_stripe'
+
   # API
 
   # membership

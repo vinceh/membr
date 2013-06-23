@@ -58,7 +58,7 @@ p {
   color: #777;
 }
 
-input[type="text"], input[type="number"], input[type="email"], .customSelect {
+input[type="text"], input[type="number"], input[type="email"], .customSelect, select {
   outline: none;
   padding: 9px 11px;
   border: 1px solid #ccc;
@@ -574,6 +574,13 @@ h3 {
         border: 1px solid #008cdd;
       }
     }
+  }
+  .which-member {
+    margin-bottom: 10px;
+  }
+  .customSelect {
+    background-color: white;
+    width: 350px;
   }
 }
 

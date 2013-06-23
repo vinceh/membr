@@ -48,6 +48,43 @@ class MembersController < ApplicationController
     end
   end
 
+  def public_membership
+    @user = User.find(params[:id])
+    @member = Member.new
+
+    if request.post?
+      membership = Membership.find(params[:membership])
+
+      if membership
+        @member = Member.new(params[:member])
+        @member.developer = false
+        @member.membership = membership
+
+        if @member.valid?
+          begin
+            # Amount in cents
+            @amount = membership.fee*100
+
+            customer = Stripe::Customer.create(
+              :email => @member.email,
+              :card  => params[:stripeToken],
+              :plan => membership.id
+            )
+
+            @member.stripe_customer_id = customer.id
+            @member.save
+
+            redirect_to :action => :invite_success
+
+          rescue Stripe::CardError => e
+            flash[:error] = e.message
+            redirect_to charges_path
+          end
+        end
+      end
+    end
+  end
+
   # API
   def get_all
     members = current_user.members

@@ -1,18 +1,20 @@
 <% content_for :head do %>
+  <%= javascript_include_tag "jquery.customSelect.min" %>
   <%= javascript_include_tag "https://ajax.aspnetcdn.com/ajax/jquery.validate/1.8.1/jquery.validate.min.js" %>
   <%= javascript_include_tag "https://js.stripe.com/v1/" %>
 <% end %>
 
 <div class="container join">
-  <h1><%= @creatable.membership.name %></h1>
+  <h1>Join up</h1>
   <span class="fee">
-    <span class="amount"><span class="dollar-sign">$</span><%= @creatable.membership.fee %></span>
-    <%= "/#{@creatable.membership.renewal_text}" %>
+    <span class="amount"><span class="dollar-sign">$</span><span class="value"></span></span>
+    /<span class="renewal"></span>
   </span>
-  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent lobortis metus dui, nec egestas nibh scelerisque in. </p>
+  <p class="which-member">Which membership would you like?</p>
 
   <div class="invite-wrap">
-    <%= form_for @member, :url => members_create_path(:creatable_id => @creatable.id) do |f| %>
+    <%= form_for @member, :url => members_public_create_path do |f| %>
+      <%= select_tag "membership", membership_options(@user.memberships)%>
       <%= f.error_messages %>
       <div class="personal-info">
         <h3>Personal Information</h3>
@@ -28,14 +30,32 @@
       </div>
       <div class="billing">
         <h3>Billing</h3>
-        <p>You will be charged <span class="bold">$<%= "#{@creatable.membership.fee}/#{@creatable.membership.renewal_text}" %></span></p>
+        <p>You will be charged <span class="bold">$</span></p>
       </div>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent lobortis metus dui, nec egestas nibh scelerisque in. </p>
       <script src="https://checkout.stripe.com/v2/checkout.js" class="stripe-button"
-              data-key="pk_test_3v97jDIcjFOnVPo1oz5ohyRo"
-              data-amount="<%= @creatable.membership.fee*100 %>"
-              data-description="<%= @creatable.membership.name + " - $#{@creatable.membership.fee}/#{@creatable.membership.renewal_text}"%>"></script>
+              data-key="pk_test_3v97jDIcjFOnVPo1oz5ohyRo"></script>
       <%= image_tag "outline.png", :class => "stripe" %>
     <% end %>
   </div>
 </div>
+
+<script>
+  $(window).load(function() {
+    $('#membership').change(function() {
+      var selected = $(this).find(':selected');
+      changeMembership(selected.text(), selected.attr('data-amount'), selected.attr('data-renewal'));
+    });
+
+    $('#membership').trigger('change');
+    $('#membership').customSelect();
+  });
+
+  function changeMembership(name, fee, renewal) {
+    var billing = $('.billing');
+    billing.find('.bold').html('$'+fee+'/'+renewal);
+    var billing = $('.fee');
+    billing.find('.value').html(fee);
+    billing.find('.renewal').html(renewal);
+  }
+</script>

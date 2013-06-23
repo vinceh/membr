@@ -13,6 +13,9 @@ Membr::Application.routes.draw do
   get 'invitation/:token' => 'members#invitation', :as => :invite
   post 'invitation/:token' => 'members#invitation', :as => :members_create
 
+  get 'memberships/:id/join' => 'members#public_membership', :as => :invite
+  post 'memberships/:id/join' => 'members#public_membership', :as => :members_public_create
+
   # Stripe Webhook
   post '/stripe-event' => 'events#stripe_event'
   get '/test-stripe' => 'events#test_stripe'

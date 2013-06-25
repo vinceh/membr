@@ -107,4 +107,12 @@ class MembersController < ApplicationController
       render :json => {success: false, message: "Failed to send invite"}
     end
   end
+
+  def bulk_invite
+    if Member.bulk_invite(params[:bulk_invite_file], current_user)
+      render :json => {success: true}
+    else
+      render :json => {success: false, message: "Incorrect format or invalid membership names"}
+    end
+  end
 end

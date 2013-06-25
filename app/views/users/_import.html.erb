@@ -1,0 +1,9 @@
+<div class="inner panel import">
+  <div class="detail">
+    <h2>Bulk invite</h2>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis et nunc purus. Aenean a consectetur metus, at consequat neque.</p>
+    <input type="file" name="bulk_invite_file" file-upload="member_urls.bulk_invite" loader="bulkLoader" success="bulkSuccess">
+    <%= image_tag "ajax-loader.gif", "ng-show" => "bulkLoader" %>
+    <span ng-class="bulkSuccess" class="bulk-success">Invites sent!</span>
+  </div>
+</div>

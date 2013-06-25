@@ -639,3 +639,23 @@ h3 {
   left: 5px;
 }
 
+.import {
+  p {
+    width: 500px;
+  }
+  input[type="file"] {
+    @include font-light;
+    margin: 0;
+    margin-top: 20px;
+  }
+  .bulk-success {
+    opacity: 0;
+    @include font-light;
+    @include transition-property(opacity);
+    @include transition-duration(0.3s);
+    &.show {
+      opacity: 1
+    }
+  }
+}
+

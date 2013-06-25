@@ -5,6 +5,8 @@ var app = angular.module('membr', ['membr.services', 'membr.directives']);
 function AppCtrl($scope, $location, $http, Membership, Member, $q, $timeout) {
   $http.defaults.headers.common ['X-CSRF-Token']=$('meta[name="csrf-token"]').attr('content');
 
+  $scope.member_urls = Member.urls;
+
   $scope.masterLoading = true;
   // loading all the data
   var promises = [
@@ -78,20 +80,6 @@ function AppCtrl($scope, $location, $http, Membership, Member, $q, $timeout) {
 }
 
 angular.module('membr.services', [], function ($provide) {
-  $provide.factory('Boardgame', function ($http) {
-    var Boardgame = function (data) {
-      angular.extend(this, data);
-    }
-
-    Boardgame.get = function (page) {
-      return $http.get('/api/bg?page=' + page).then(function (response) {
-        return new Boardgame(response.data.membership);
-      })
-    }
-
-    return Boardgame;
-  });
-
   $provide.factory('Member', function ($http) {
     var Member = function (data) {
       angular.extend(this, data);
@@ -108,6 +96,10 @@ angular.module('membr.services', [], function ($provide) {
         return response.data;
       })
     }
+
+    Member.urls = {
+      bulk_invite: '/api/members/bulkInvite'
+    };
 
     return Member;
   });
@@ -147,6 +139,38 @@ angular.module('membr.services', [], function ($provide) {
 });
 
 angular.module('membr.directives', []).
+  directive('fileUpload',function ($timeout) {
+    return {
+      restrict: 'A',
+      scope: {
+        url: '=fileUpload',
+        loader: '=loader',
+        success: '=success'
+      },
+      link: function ($scope, $element, $attrs) {
+        $scope.$watch('url', function(value) {
+          if ( value ) {
+            $element.fileupload({
+              dataType: 'json',
+              url: $scope.url,
+              progress: function() {
+                $scope.loader = true;
+                $scope.$apply();
+              },
+              done: function (e, data) {
+                $scope.loader = false;
+                $scope.success = "show";
+                $timeout(function() {
+                  $scope.success = "";
+                }, 2000);
+                $scope.$apply();
+              }
+            });
+          }
+        });
+      }
+    }
+  }).
   directive('popUp',function () {
     return {
       restrict: 'A',

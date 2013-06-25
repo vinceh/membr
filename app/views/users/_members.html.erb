@@ -6,7 +6,7 @@
 
     <div class="public-link">
       <div>Public URL</div>
-      <input type="text" value=<%= request.protocol + request.host_with_port + invite_path(current_user.id) %> readonly>
+      <input type="text" value=<%= request.protocol + request.host_with_port + public_invite_path(current_user.id) %> readonly>
     </div>
     <button class="btn" ng-click="openInvite()" ng-show="memberships.length > 0">Invite someone</button> <span class="invite-sent" ng-class="inviteSentClass">Invite sent!</span>
 

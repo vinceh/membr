@@ -12,6 +12,8 @@
   <%= javascript_include_tag "global" %>
   <%= javascript_include_tag "jquery.tablesorter.min" %>
   <%= javascript_include_tag "jquery.customSelect.min" %>
+  <%= javascript_include_tag "jquery.ui.widget" %>
+  <%= javascript_include_tag "jquery.fileupload" %>
 </head>
 <body ng-app="membr" ng-controller="AppCtrl">
 
@@ -38,8 +40,8 @@
       <div class="nav-item">
         Notifications
       </div>
-      <div class="nav-item">
-        Import/Export
+      <div class="nav-item" data-panel="import">
+        Import
       </div>
       <div class="nav-item">
         Settings

@@ -1,7 +1,30 @@
 <div class="inner panel import">
   <div class="detail">
     <h2>Bulk invite</h2>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis et nunc purus. Aenean a consectetur metus, at consequat neque.</p>
+    <p>Create a spreadsheet with the following format:</p>
+    <table>
+      <tr>
+        <th>Email</th>
+        <th>Membership Name</th>
+      </tr>
+      <tr>
+        <td>example1@gmail.com</td>
+        <td>Example Membership #1</td>
+      </tr>
+      <tr>
+        <td>example2@gmail.com</td>
+        <td>Example Membership #2</td>
+      </tr>
+      <tr>
+        <td>...</td>
+        <td>...</td>
+      </tr>
+      <tr>
+        <td>example99@gmail.com</td>
+        <td>Example Membership #99</td>
+      </tr>
+    </table>
+    <p>Import by using the file uploader below and we will send individual membership invites to each email:</p>
     <input type="file" name="bulk_invite_file" file-upload="member_urls.bulk_invite" loader="bulkLoader" success="bulkSuccess">
     <%= image_tag "ajax-loader.gif", "ng-show" => "bulkLoader" %>
     <span ng-class="bulkSuccess" class="bulk-success">Invites sent!</span>

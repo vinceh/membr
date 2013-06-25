@@ -32,8 +32,8 @@ class Member < ActiveRecord::Base
 
     (1..book.last_row).each do |i|
       row = book.row(i)
-      email = row[0]
-      membership = row[1]
+      email = row[0].strip
+      membership = row[1].strip
 
       membership = Membership.find_by_name(membership)
       if /@/ =~ email && membership && membership.user = user

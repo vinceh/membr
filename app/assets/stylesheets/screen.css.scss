@@ -675,5 +675,14 @@ h3 {
       }
     }
   }
+  .section {
+    margin-top: 100px;
+    h2 {
+      margin-bottom: 20px;
+    }
+    &:first-child {
+      margin-top: 0;
+    }
+  }
 }
 

@@ -2,6 +2,12 @@
   <div class="detail">
     <h2>You have {{ members.length }} members</h2>
 
+    <p>The public URL link will allow anyone to join your public memberships.  If you would like to invite someone to a private membership, use the "Invite Someone" button.</p>
+
+    <div class="public-link">
+      <div>Public URL</div>
+      <input type="text" value=<%= request.protocol + request.host_with_port + invite_path(current_user.id) %> readonly>
+    </div>
     <button class="btn" ng-click="openInvite()" ng-show="memberships.length > 0">Invite someone</button> <span class="invite-sent" ng-class="inviteSentClass">Invite sent!</span>
 
     <table id="members">
@@ -22,7 +28,7 @@
           <td>{{ m.email }}</td>
           <td>{{ m.phone }}</td>
           <td>{{ m.joined }}</td>
-          <td>{{ m.payment }}</td>
+          <td>{{ m.payment && "Paid" || "Not Paid"}}</td>
         </tr>
       </tbody>
     </table>

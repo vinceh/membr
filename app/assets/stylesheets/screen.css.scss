@@ -372,6 +372,32 @@ h3 {
 
 .members {
   padding-right: 30px;
+  p {
+    width: 550px;
+  }
+  .public-link {
+    display: table;
+    @include font-light;
+    margin: 20px 0;
+    div {
+      float: left;
+      padding: 10px 15px;
+      &:first-child {
+        background-color: #555;
+        color: white;
+        @include font-semibold;
+        border-right: 1px solid #eee;
+      }
+    }
+    input {
+      position: relative;
+      left: -2px;
+      padding: 9px;
+      float: left;
+      margin: 0;
+      width: 400px;
+    }
+  }
   table {
     margin-top: 50px;
     background-color: #f6f6f6;

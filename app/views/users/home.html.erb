@@ -53,7 +53,7 @@
         </div>
         <div class="right">
           <h2 class="fee">${{ m.fee }}/{{ m.renewal_period_text }}</h2>
-          <p>{{ m.members }} member{{ m.members != 1 && 's' }}</p>
+          <p>{{ m.members }} member{{ m.members != 1 && 's' || '' }}</p>
           <p>generating ${{ m.fee * m.members }}/{{ m.renewal_period_text }}</p>
           <p>next billing on June 23, 2013</p>
         </div>

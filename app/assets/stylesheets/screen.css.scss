@@ -59,12 +59,12 @@ p {
 }
 
 a {
-  color: #666;
+  color: #777;
   @include font-light;
   text-decoration: none;
   font-size: 14px;
   &:visited {
-    color: #666;
+    color: #777;
     text-decoration: none;
   }
   &:hover {
@@ -360,6 +360,13 @@ h3 {
   position: relative;
   height: 40px;
   border-bottom: 1px solid #ddd;
+  .right-links {
+    float: right;
+    line-height: 40px;
+    a {
+      margin-right: 20px;
+    }
+  }
 }
 
 .new-membership-plan {
@@ -721,9 +728,10 @@ h3 {
     .password {
       input {
         display: block;
+        margin-bottom: 5px;
       }
       input:last-child {
-        margin-top: 5px;
+        margin-bottom: 0;
       }
     }
     .submit {
@@ -742,6 +750,19 @@ h3 {
     }
     .field_with_errors {
       @include inline-block;
+    }
+  }
+  input.cancel {
+    display: block;
+    font-size: 14px;
+    margin-top: 15px;
+    color: $error;
+    background-color: transparent;
+    padding: 0;
+    border: none;
+    @include font-light;
+    &:hover {
+      text-decoration: underline;
     }
   }
 }

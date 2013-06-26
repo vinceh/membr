@@ -10,10 +10,20 @@ en:
         zipcode: "Zip/Postal Code"
         street_address: "Street Address"
         state: "Province/State"
+      user:
+        tos: ""
+        email: "Email"
     errors:
       template:
         header:
           one: "Whoops!"
           other: "Whoops!"
         body: ""
+      models:
+        user:
+          attributes:
+            tos:
+              accepted: "You must accept our 'terms of service' to create an account"
+            email:
+              taken: "is already associated with an account"
 

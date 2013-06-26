@@ -58,7 +58,22 @@ p {
   color: #777;
 }
 
-input[type="text"], input[type="number"], input[type="email"], .customSelect, select {
+a {
+  color: #666;
+  @include font-light;
+  text-decoration: none;
+  font-size: 14px;
+  &:visited {
+    color: #666;
+    text-decoration: none;
+  }
+  &:hover {
+    cursor: pointer;
+    color: #333;
+  }
+}
+
+input[type="text"], input[type="number"], input[type="email"], .customSelect, select, input[type="password"] {
   outline: none;
   padding: 9px 11px;
   border: 1px solid #ccc;
@@ -686,3 +701,66 @@ h3 {
   }
 }
 
+.sing-up {
+  margin-top: 100px;
+  margin-bottom: 100px;
+  h2 {
+    margin-bottom: 40px;
+  }
+  form {
+    input {
+      margin: 0;
+    }
+    label:first-child {
+      margin-left: 5px;
+      display: block;
+      margin-bottom: 10px;
+      margin-top: 20px;
+      @include font-light;
+    }
+    .password {
+      input {
+        display: block;
+      }
+      input:last-child {
+        margin-top: 5px;
+      }
+    }
+    .submit {
+      margin-top: 30px;
+    }
+  }
+  a {
+    display: block;
+    margin-top: 15px;
+  }
+  .tos {
+    margin-top: 20px;
+    label:first-child {
+      margin: 0;
+      margin-left: 5px;
+    }
+    .field_with_errors {
+      @include inline-block;
+    }
+  }
+}
+
+#error_explanation, .login-error {
+  padding: 20px;
+  background-color: white;
+  border: 1px dashed #bbb;
+  margin-bottom: 30px;
+  @include font-light;
+  h2 {
+    margin-bottom: 20px;
+    color: $error;
+  }
+  ul {
+    li {
+      @include font-light;
+      font-size: 15px;
+      margin-top: 7px;
+    }
+  }
+}

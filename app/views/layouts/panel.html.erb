@@ -25,7 +25,10 @@
 </div>
 
 <div class="header">
-  fdsa
+  <div class="right-links">
+    <%= link_to 'Settings', edit_user_registration_path %>
+    <%= link_to "Logout", destroy_user_session_path, method: :delete %>
+  </div>
 </div>
 
 <div class="home">
@@ -37,13 +40,10 @@
       <div class="nav-item" data-panel="memberships">
         Memberships
       </div>
-      <div class="nav-item">
-        Notifications
-      </div>
       <div class="nav-item" data-panel="import">
         Import
       </div>
-      <div class="nav-item">
+      <div class="nav-item" data-panel="settings">
         Settings
       </div>
     </div>

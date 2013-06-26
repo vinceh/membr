@@ -90,8 +90,11 @@ class MembersController < ApplicationController
     members = current_user.members
 
     returnee = []
-    members.each do |m|
-      returnee << m.to_json
+
+    if members
+      members.each do |m|
+        returnee << m.to_json
+      end
     end
 
     render :json => returnee.to_json

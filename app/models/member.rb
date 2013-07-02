@@ -3,25 +3,29 @@ class Member < ActiveRecord::Base
 
   validates_presence_of :membership_id, :email
   validates_presence_of :full_name, :street_address, :city, :state, :country, :zipcode, :phone, :if => "!developer"
-  attr_accessible :membership_id, :full_name, :email, :street_address, :city, :state, :country, :zipcode, :phone, :developer, :create_token, :claim_date, :paid
-
-  def generate_token
-    self.create_token = loop do
-      random_token = SecureRandom.urlsafe_base64
-      break random_token unless Member.where(create_token: random_token).exists?
-    end
-  end
+  attr_accessible :membership_id, :full_name, :email, :street_address, :city, :state, :country, :zipcode, :phone, :developer, :paid, :active
 
   def to_json
     {
       id: id,
+      active: active,
       full_name: full_name,
       email: email,
       phone: phone,
       joined: created_at.strftime("%b %m, %Y"),
+      last_activity: updated_at.strftime("%b %m, %Y"),
       payment: paid,
+      payment_time: (paid_time.strftime("%b %m, %Y") if paid_time),
       membership: membership.name
     }
+  end
+
+  def self.all_inactive
+    where(:active => false).all
+  end
+
+  def self.all_active
+    where(:active => true).all
   end
 
   def self.bulk_invite(file, user)
@@ -79,5 +83,41 @@ class Member < ActiveRecord::Base
       when ".xlsx" then Roo::Excelx.new(file.path, nil, :ignore)
       else raise "Unknown file type: #{file.original_filename}"
     end
+  end
+
+  def cancel_subscription
+    begin
+      cu = Stripe::Customer.retrieve(stripe_customer_id)
+      res = cu.cancel_subscription(:at_period_end => true)
+      if res.status == "canceled"
+        self.active = false
+        save!
+        true
+      else
+        nil
+      end
+    rescue
+      nil
+    end
+  end
+
+  def change_subscription(membership)
+    if (self.active && membership.id != self.membership_id) || !self.active
+      begin
+        cu = Stripe::Customer.retrieve(stripe_customer_id)
+        res = cu.update_subscription(:plan => membership.id, :prorate => false)
+        if res.status == "active"
+          self.active = true
+          self.membership = membership
+          save!
+          return self
+        else
+          nil
+        end
+      rescue
+        nil
+      end
+    end
+    nil
   end
 end

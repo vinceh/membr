@@ -26,9 +26,8 @@
         </tr>
       </table>
       <p>Import by using the file uploader below and we will send individual membership invites to each email:</p>
-      <input type="file" name="bulk_invite_file" file-upload="member_urls.bulk_invite" loader="bulkLoader" success="bulkSuccess">
+      <input type="file" name="bulk_invite_file" file-upload="member_urls.bulk_invite" loader="bulkLoader" success="show_success('Invites sent')">
       <%= image_tag "ajax-loader.gif", "ng-show" => "bulkLoader" %>
-      <span ng-class="bulkSuccess" class="bulk-success">Invites sent!</span>
     </div>
   </div>
 </div>

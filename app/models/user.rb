@@ -13,14 +13,13 @@ class User < ActiveRecord::Base
   validates :tos, :acceptance => true, :on => :create
 
   has_many :memberships
+  has_many :members, :through => :memberships
 
-  def members
-    members = []
+  def member(id)
+    members.where(:id => id).first
+  end
 
-    memberships.each do |m|
-      members << m.members
-    end
-
-    members.flatten!
+  def membership(id)
+    memberships.where(:id => id).first
   end
 end

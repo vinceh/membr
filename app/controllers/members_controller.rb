@@ -1,7 +1,7 @@
 class MembersController < ApplicationController
   protect_from_forgery
 
-  before_filter :authenticate_user!, :except => [:invitation, :invite_failure, :invite_success]
+  before_filter :authenticate_user!, :except => [:invitation, :invite_failure, :invite_success, :public_membership]
 
   def invitation
     @creatable = Creatable.find_by_token(params[:token])
@@ -23,9 +23,6 @@ class MembersController < ApplicationController
 
         if @member.valid?
           begin
-          # Amount in cents
-          @amount = membership.fee*100
-
           customer = Stripe::Customer.create(
             :email => @member.email,
             :card  => params[:stripeToken],
@@ -35,8 +32,9 @@ class MembersController < ApplicationController
           @member.stripe_customer_id = customer.id
           @member.save
 
-          # TODO
-          #creatable.destroy
+          MemberMailer.joined_membership(@member, membership).deliver
+
+          creatable.destroy
           redirect_to :action => :invite_success
 
           rescue Stripe::CardError => e
@@ -62,9 +60,6 @@ class MembersController < ApplicationController
 
         if @member.valid?
           begin
-            # Amount in cents
-            @amount = membership.fee*100
-
             customer = Stripe::Customer.create(
               :email => @member.email,
               :card  => params[:stripeToken],
@@ -73,6 +68,8 @@ class MembersController < ApplicationController
 
             @member.stripe_customer_id = customer.id
             @member.save
+
+            MemberMailer.joined_membership(@member, membership).deliver
 
             redirect_to :action => :invite_success
 
@@ -86,14 +83,28 @@ class MembersController < ApplicationController
   end
 
   # API
-  def get_all
+  def get_all_active
     members = current_user.members
 
     returnee = []
 
     if members
       members.each do |m|
-        returnee << m.to_json
+        returnee << m.to_json if m.active
+      end
+    end
+
+    render :json => returnee.to_json
+  end
+
+  def get_all_inactive
+    members = current_user.members
+
+    returnee = []
+
+    if members
+      members.each do |m|
+        returnee << m.to_json if !m.active
       end
     end
 
@@ -102,8 +113,9 @@ class MembersController < ApplicationController
 
   def invite
     creatable = Creatable.new(params[:creatable])
+    membership = current_user.membership(creatable.membership.id)
 
-    if creatable.save!
+    if membership && creatable.save!
       MemberMailer.send_invite(creatable).deliver
       render :json => {success: true}
     else
@@ -116,6 +128,49 @@ class MembersController < ApplicationController
       render :json => {success: true}
     else
       render :json => {success: false, message: "Incorrect format or invalid membership names"}
+    end
+  end
+
+  def invoices_for
+    member = current_user.member(params[:id])
+
+    event = Stripe::Invoice.all(
+      :customer => member.stripe_customer_id,
+      :count => 5
+    )
+
+    event.data.each do |i|
+      i.date = Time.at(i.date).strftime("%b %m, %Y")
+    end
+
+    render :json => {invoices: event.data}
+  end
+
+  def cancel_member
+    member = current_user.member(params[:id])
+
+    if member && member.cancel_subscription
+      MemberMailer.cancel_subscription(@member, @member.membership).deliver
+      render :json => {success: true}
+    else
+      render :json => {success: false, message: "There was an error with your request"}
+    end
+  end
+
+  def change_membership
+    member = current_user.member(params[:id])
+    membership = current_user.membership(params[:membership_id])
+
+    if member && membership
+      new_member = member.change_subscription(membership)
+      if new_member
+        MemberMailer.change_membership(member, membership).deliver
+        render :json => {success: true, member: new_member.to_json}
+      else
+        render :json => {success: false, message: "There was an error with your request"}
+      end
+    else
+      render :json => {success: false, message: "There was an error with your request"}
     end
   end
 end

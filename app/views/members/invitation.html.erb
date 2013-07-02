@@ -6,7 +6,7 @@
 <div class="container join">
   <h1><%= @creatable.membership.name %></h1>
   <span class="fee">
-    <span class="amount"><span class="dollar-sign">$</span><%= @creatable.membership.fee %></span>
+    <span class="amount"><%= @creatable.membership.display_fee %></span>
     <%= "/#{@creatable.membership.renewal_text}" %>
   </span>
   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent lobortis metus dui, nec egestas nibh scelerisque in. </p>
@@ -28,13 +28,13 @@
       </div>
       <div class="billing">
         <h3>Billing</h3>
-        <p>You will be charged <span class="bold">$<%= "#{@creatable.membership.fee}/#{@creatable.membership.renewal_text}" %></span></p>
+        <p>You will be charged <span class="bold"><%= "#{@creatable.membership.display_fee}/#{@creatable.membership.renewal_text}" %></span></p>
       </div>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent lobortis metus dui, nec egestas nibh scelerisque in. </p>
       <script src="https://checkout.stripe.com/v2/checkout.js" class="stripe-button"
               data-key="pk_test_3v97jDIcjFOnVPo1oz5ohyRo"
-              data-amount="<%= @creatable.membership.fee*100 %>"
-              data-description="<%= @creatable.membership.name + " - $#{@creatable.membership.fee}/#{@creatable.membership.renewal_text}"%>"></script>
+              data-amount="<%= @creatable.membership.fee %>"
+              data-description="<%= @creatable.membership.name + " - #{@creatable.membership.display_fee}/#{@creatable.membership.renewal_text}"%>"></script>
       <%= image_tag "outline.png", :class => "stripe" %>
     <% end %>
   </div>

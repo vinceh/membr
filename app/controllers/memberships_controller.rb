@@ -10,7 +10,7 @@ class MembershipsController < ApplicationController
 
     if m.save!
       Stripe::Plan.create(
-        :amount => m.fee*100,
+        :amount => m.fee,
         :interval => m.get_interval,
         :interval_count => m.get_interval_count,
         :name => m.name,
@@ -24,7 +24,7 @@ class MembershipsController < ApplicationController
   end
 
   def retrieve
-    m = Membership.find(params[:id])
+    m = current_user.membership(params[:id])
 
     if m
       render :json => success(m.to_json)
@@ -34,7 +34,7 @@ class MembershipsController < ApplicationController
   end
 
   def update
-    m = Membership.find(params[:id])
+    m = current_user.membership(params[:id])
     m.update_attributes(params[:membership])
 
     if m.save!
@@ -57,7 +57,7 @@ class MembershipsController < ApplicationController
 
   # TODO
   def delete
-    m = Membership.find(params[:id])
+    m = current_user.membership(params[:id])
 
     if m && m.destroy!
 

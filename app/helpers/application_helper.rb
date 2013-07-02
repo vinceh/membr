@@ -5,7 +5,7 @@ module ApplicationHelper
 
     memberships.each do |m|
       unless m.is_private
-        options = options + "<option value=\"#{m.id}\" data-amount=\"#{m.fee}\" data-renewal=\"#{m.renewal_text}\">#{m.name} - $#{m.fee}/#{m.renewal_text}</option>"
+        options = options + "<option value=\"#{m.id}\" data-amount=\"#{m.display_fee}\" data-renewal=\"#{m.renewal_text}\">#{m.name} - #{m.display_fee}/#{m.renewal_text}</option>"
       end
     end
 

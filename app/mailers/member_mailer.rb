@@ -6,4 +6,28 @@ class MemberMailer < ActionMailer::Base
     @membership = creatable.membership
     mail(:to => @creatable.email, :subject => "Membership Invite")
   end
+
+  def joined_membership(member, membership)
+    @member = member
+    @membership = membership
+    mail(:to => @member.email, :subject => "Thank you for joining #{@membership.name}")
+  end
+
+  def invoice(member, membership)
+    @member = member
+    @membership = membership
+    mail(:to => @member.email, :subject => "[billing] Your Membr invoice for #{Time.now.strftime("%b %m, %Y")} is available")
+  end
+
+  def cancel_membership(member, membership)
+    @member = member
+    @membership = membership
+    mail(:to => @member.email, :subject => "Your Membr membership has been canceled.")
+  end
+
+  def change_membership(member, membership)
+    @member = member
+    @membership = membership
+    mail(:to => @member.email, :subject => "Your Membr membership has been changed")
+  end
 end

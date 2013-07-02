@@ -1,4 +1,5 @@
 class Membership < ActiveRecord::Base
+
   belongs_to :user
   has_many :members
 
@@ -62,6 +63,7 @@ class Membership < ActiveRecord::Base
       is_private: is_private,
       is_private_text: public_text,
       fee: fee,
+      fee_text: display_fee,
       renewal_period: renewal_period,
       renewal_period_text: renewal_text,
       created_at: created_at.strftime("%b %d, %Y"),
@@ -75,6 +77,10 @@ class Membership < ActiveRecord::Base
     else
       "Public"
     end
+  end
+
+  def display_fee
+    '$'+sprintf("%.2f", fee.to_f/100)
   end
 
   def renewal_text

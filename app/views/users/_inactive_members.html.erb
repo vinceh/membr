@@ -1,0 +1,68 @@
+<div class="inner panel inactiveMembers">
+  <div class="detail">
+    <h2>{{ inactiveMembers.length }} inactive member{{ inactiveMembers.length != 1 && 's' || '' }}</h2>
+
+    <p ng-show="inactiveMembers.length == 0">
+      You don't have any inactive members yet.  Any canceled memberships will appear here, where you can reactivate them.
+    </p>
+
+    <table id="inactiveMembers" ng-hide="inactiveMembers.length == 0">
+      <thead>
+      <tr>
+        <th>Last Membership</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Inactive Since</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr class="memberRow" ng-repeat="m in inactiveMembers" ng-click="memberDetail(m)">
+        <td>{{ m.membership }}</td>
+        <td>{{ m.full_name }}</td>
+        <td>{{ m.email }}</td>
+        <td>{{ m.phone }}</td>
+        <td>{{ m.last_activity }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<div class="member-details full-pager" ng-show="memberDetailOpen">
+  <div class="wash"></div>
+  <div class="close" ng-click="memberDetailOpen = false"><%= image_tag "cross.png" %></div>
+  <div class="detail-wrap full-content">
+    <h2>{{ detailMember.full_name }} - {{ detailMember.active && detailMember.membership || 'Inactive'}}</h2>
+    <div ng-show="memberships.length > 1" class="change-member">
+      <span>Change membership to</span>
+      <select id="change-membership" ng-model="changeMembership" ng-options="m.id as m.name for m in detailMemberMemberships"></select>
+      <button type="button" class="flat-btn" confirm="Are you sure you want to change this membership?" action="changeMember(detailMember, changeMembership)">GO</button>
+      <%= image_tag "ajax-loader.gif", "ng-show" => "changingMember" %>
+    </div>
+    <div class="invoice-loader" ng-show="loadingInvoices">
+      <%= image_tag "ajax-loader.gif" %> loading recent invoices...
+    </div>
+    <div class="invoices" ng-hide="loadingInvoices">
+      <div class="invoice" ng-repeat="i in invoices">
+        <div class="invoice-text">
+          {{ invoiceHelpers.startingText(i) }} <br/>
+          <span>{{ i.date }}</span>
+        </div>
+        <div class="invoice-paid" ng-class="i.paid && 'paid' || 'not-paid'">
+          {{ invoiceHelpers.paid(i) }}
+        </div>
+      </div>
+    </div>
+    <div ng-show="detailMember.active" class="cancel-member">
+      <button type="button" class="cancel" confirm="Are you sure you want to cancel this membership?" action="cancelMember(detailMember)">Cancel this membership</button>
+      <%= image_tag "ajax-loader.gif", "ng-show" => "cancelingMember" %>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $("#invite-membership").customSelect();
+  $("#change-membership").customSelect();
+</script>

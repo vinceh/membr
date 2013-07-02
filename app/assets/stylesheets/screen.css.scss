@@ -49,7 +49,7 @@ $success: #71dd51;
 
 .bold {
   font-weight: bold;
-  color: #444;
+  color: #555;
 }
 
 p {
@@ -71,6 +71,10 @@ a {
     cursor: pointer;
     color: #333;
   }
+}
+
+label {
+  @include font-light;
 }
 
 input[type="text"], input[type="number"], input[type="email"], .customSelect, select, input[type="password"] {
@@ -152,6 +156,25 @@ table {
   }
 }
 
+.flat-btn {
+  border: none;
+  background-color: $p;
+  @include font-light;
+  &:hover {
+    background-color: $pl;
+  }
+  &:active {
+    background-color: $pl;
+  }
+  &:disabled {
+    opacity: 0.5;
+    &:hover, &:active {
+      cursor: default;
+      background-color: $p;
+    }
+  }
+}
+
 .btn {
   border: 1px solid $pd;
   background-color: $p;
@@ -179,7 +202,36 @@ table {
   &:hover, &:active {
     border: 1px solid #bbb;
   }
+}
 
+.cancel {
+  @include inline-block;
+  @include font-light;
+  color: $error;
+  padding: 9px 15px;
+  border: none;
+  background-color: transparent;
+  &:hover {
+    cursor: pointer;
+    color: white;
+    background-color: $error;
+  }
+  &:active {
+    border: none;
+    padding: 9px 15px;
+    color: white;
+    background-color: $error;
+  }
+  &:disabled {
+    opacity: 0.8;
+    background-color: $error;
+    color: white;
+    &:hover, &:active {
+      cursor: default;
+      background-color: $error;
+      @include box-shadow(none);
+    }
+  }
 }
 
 body {
@@ -261,6 +313,9 @@ h3 {
         height: 480px;
         opacity: 1;
       }
+    }
+    p {
+      max-width: 550px;
     }
   }
 }
@@ -434,11 +489,20 @@ h3 {
   display: none;
 }
 
+.inactiveMembers {
+  padding-right: 30px;
+  .memberRow {
+    cursor: pointer;
+  }
+}
 
 .members {
   padding-right: 30px;
   p {
     width: 550px;
+    &.member-help {
+      margin-bottom: 20px;
+    }
   }
   .public-link {
     display: table;
@@ -463,6 +527,9 @@ h3 {
       width: 400px;
     }
   }
+  .memberRow {
+    cursor: pointer;
+  }
 }
 
 .master-loader {
@@ -485,6 +552,95 @@ h3 {
       top: 2px;
       height: 15px;
       margin-left: 10px;
+    }
+  }
+}
+
+.member-details {
+  @include full-page;
+  .full-content.detail-wrap {
+    top: 15%;
+  }
+  .wash {
+    @include wash(white, 0.97);
+  }
+  h2 {
+    margin-bottom: 40px;
+  }
+  .invoice-loader {
+    @include font-light;
+    line-height: 20px;
+    margin-top: 40px;
+    font-size: 14px;
+    color: #888;
+    img {
+      position: relative;
+      top: 5px;
+      height: 20px;
+      margin-right: 3px;
+    }
+  }
+  .invoices {
+    margin-top: 40px;
+    @include font-light;
+    width: 550px;
+    .invoice {
+      padding: 20px;
+      border-top: 1px dashed #ddd;
+      display: table;
+      width: 100%;
+      .invoice-text {
+        float: left;
+        span {
+          font-size: 14px;
+          color: #999;
+          @include inline-block;
+          margin-top: 5px;
+        }
+      }
+      .invoice-paid {
+        float: right;
+        &.paid {
+          color: $success;
+        }
+        &.not-paid {
+          color: $error;
+        }
+      }
+      &:last-child {
+        border-bottom: 1px dashed #ddd;
+      }
+    }
+  }
+  .cancel-member {
+    margin-top: 30px;
+    img {
+      height: 21px;
+      position: relative;
+      top: 7px;
+      left: 5px;
+    }
+  }
+  .change-member {
+    @include font-light;
+    span {
+      margin-right: 5px;
+    }
+    .customSelect {
+      min-width: 250px;
+    }
+    .flat-btn {
+      position: relative;
+      right: 5px;
+      bottom: 1px;
+      height: 36px;
+      padding: 10px 15px;
+    }
+    img {
+      height: 23px;
+      position: relative;
+      top: 6px;
+      left: 1px;
     }
   }
 }
@@ -530,17 +686,6 @@ h3 {
 .customSelect.customSelectHover {
   cursor: pointer;
   border: 1px solid #999;
-}
-
-.invite-sent {
-  margin-left: 10px;
-  opacity: 0;
-  @include font-light;
-  @include transition-property(opacity);
-  @include transition-duration(0.3s);
-  &.show {
-    opacity: 1;
-  }
 }
 
 .container {
@@ -630,6 +775,28 @@ h3 {
   .customSelect {
     background-color: white;
     width: 350px;
+  }
+}
+
+.full-pager {
+  @include full-page;
+  &>div  {
+    position: relative;
+  }
+  .full-content {
+    margin-left: 18%;
+    position: relative;
+    top: 20%;
+  }
+  .close {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    opacity: 0.6;
+    &:hover {
+      cursor: pointer;
+      opacity: 1;
+    }
   }
 }
 
@@ -783,5 +950,22 @@ h3 {
       font-size: 15px;
       margin-top: 7px;
     }
+  }
+}
+
+.success-header {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  line-height: 40px;
+  @include font-light;
+  color: $success;
+  @include transition-property(top);
+  @include transition-duration(0.3s);
+  &.enter {
+     top: 0;
   }
 }

@@ -1,16 +1,18 @@
 <div class="inner panel members">
   <div class="detail">
-    <h2>You have {{ members.length }} members</h2>
+    <h2>You have {{ members.length }} member{{ members.length != 1 && 's' || '' }}</h2>
 
-    <p>The public URL link will allow anyone to join your public memberships.  If you would like to invite someone to a private membership, use the "Invite Someone" button.</p>
+    <p ng-show="memberships.length == 0">You don't have any memberships yet.  Go to the 'Memberships' section and create one.</p>
+    <p ng-show="memberships.length > 0 && hasPublicMemberships()">The public URL link will allow anyone to join your public memberships.  If you would like to invite someone to a private membership, use the "Invite Someone" button.</p>
+    <p class="member-help" ng-show="memberships.length > 0 && !hasPublicMemberships()">If you would like to invite someone to a private membership, use the "Invite Someone" button.</p>
 
-    <div class="public-link">
+    <div class="public-link" ng-show="memberships.length > 0 && hasPublicMemberships()">
       <div>Public URL</div>
       <input type="text" value=<%= request.protocol + request.host_with_port + public_invite_path(current_user.id) %> readonly>
     </div>
-    <button class="btn" ng-click="openInvite()" ng-show="memberships.length > 0">Invite someone</button> <span class="invite-sent" ng-class="inviteSentClass">Invite sent!</span>
+    <button class="btn" ng-click="openInvite()" ng-show="memberships.length > 0">Invite someone</button>
 
-    <table id="members">
+    <table id="members" ng-hide="members.length == 0">
       <thead>
         <tr>
           <th>Membership</th>
@@ -22,7 +24,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="m in members">
+        <tr class="memberRow" ng-repeat="m in members" ng-click="memberDetail(m)">
           <td>{{ m.membership }}</td>
           <td>{{ m.full_name }}</td>
           <td>{{ m.email }}</td>
@@ -50,7 +52,3 @@
     </div>
   </div>
 </div>
-
-<script type="text/javascript">
-  $("#invite-membership").customSelect();
-</script>

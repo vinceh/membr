@@ -7,7 +7,7 @@
 <div class="container join">
   <h1>Join up</h1>
   <span class="fee">
-    <span class="amount"><span class="dollar-sign">$</span><span class="value"></span></span>
+    <span class="amount"><span class="value"></span></span>
     /<span class="renewal"></span>
   </span>
   <p class="which-member">Which membership would you like?</p>
@@ -53,7 +53,7 @@
 
   function changeMembership(name, fee, renewal) {
     var billing = $('.billing');
-    billing.find('.bold').html('$'+fee+'/'+renewal);
+    billing.find('.bold').html(fee+'/'+renewal);
     var billing = $('.fee');
     billing.find('.value').html(fee);
     billing.find('.renewal').html(renewal);

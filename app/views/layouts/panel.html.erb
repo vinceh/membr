@@ -25,6 +25,9 @@
 </div>
 
 <div class="header">
+  <div class="success-header" ng-class="showSuccess && 'enter' || ''" >
+    {{ successMessage }}
+  </div>
   <div class="right-links">
     <%= link_to 'Settings', edit_user_registration_path %>
     <%= link_to "Logout", destroy_user_session_path, method: :delete %>
@@ -35,7 +38,10 @@
     <div class="nav-panel">
       <!--<button ng-click="showScope()">Angular Scope</button>-->
       <div class="nav-item active" data-panel="members">
-        Members
+        Current Members
+      </div>
+      <div class="nav-item" data-panel="inactiveMembers">
+        Inactive Members
       </div>
       <div class="nav-item" data-panel="memberships">
         Memberships

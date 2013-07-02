@@ -19,6 +19,7 @@ Membr::Application.routes.draw do
   # Stripe Webhook
   post 'stripe-event' => 'events#stripe_event'
   get 'test-stripe' => 'events#test_stripe'
+  get 'test-stripe2' => 'events#test_stripe2'
 
   # API
 
@@ -28,6 +29,10 @@ Membr::Application.routes.draw do
 
   # member
   post 'api/member/invite' => 'members#invite'
-  get 'api/members/all' => 'members#get_all'
+  get 'api/members/all' => 'members#get_all_active'
+  get 'api/members/all_inactive' => 'members#get_all_inactive'
   post 'api/members/bulkInvite' => 'members#bulk_invite'
+  post 'api/members/change' => 'members#change_membership'
+  get 'api/members/invoice/:id' => 'members#invoices_for'
+  put 'api/members/cancel/:id' => 'members#cancel_member'
 end

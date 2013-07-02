@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130625232628) do
+ActiveRecord::Schema.define(:version => 20130701024046) do
 
   create_table "admins", :force => true do |t|
     t.string   "email",               :default => "", :null => false
@@ -58,6 +58,7 @@ ActiveRecord::Schema.define(:version => 20130625232628) do
     t.string   "stripe_customer_id"
     t.boolean  "paid",               :default => false
     t.datetime "paid_time"
+    t.boolean  "active",             :default => true,  :null => false
   end
 
   create_table "memberships", :force => true do |t|

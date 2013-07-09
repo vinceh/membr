@@ -49,15 +49,14 @@
           <h2>{{ m.name }}</h2>
           <p>Created {{ m.created_at }}</p>
           <p>{{ m.is_private_text }} membership</p>
-          <p>
-            <button class="btn-secondary settings" ng-click="editMembership(m)"><%= image_tag "gear.png" %> Settings</button>
-          </p>
+          <!--<p>-->
+            <!--<button class="btn-secondary settings" ng-click="editMembership(m)"><%= image_tag "gear.png" %> Settings</button>-->
+          <!--</p>-->
         </div>
         <div class="right">
           <h2 class="fee">{{ m.fee_text }}/{{ m.renewal_period_text }}</h2>
           <p>{{ m.members }} member{{ m.members != 1 && 's' || '' }}</p>
           <p>generating ${{ revenue_text(m.fee,m.members) }}/{{ m.renewal_period_text }}</p>
-          <p>next billing on June 23, 2013</p>
         </div>
       </div>
     </div>

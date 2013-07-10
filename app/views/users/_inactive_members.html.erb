@@ -35,9 +35,18 @@
   <div class="close" ng-click="memberDetailOpen = false"><%= image_tag "cross.png" %></div>
   <div class="detail-wrap full-content">
     <div class="side-links">
-      <a>edit details</a>
-      <a>send invoices</a>
-      <a>cancel member</a>
+      <div class="link-wrap">
+        <a href="member/{{ detailMember.id }}/edit">edit details</a>
+      </div>
+      <div class="link-wrap">
+        <a href="#">send payment<br/> update email</a>
+      </div>
+      <div class="link-wrap cancel-link" ng-show="detailMember.active">
+        <%= image_tag "ajax-loader.gif", "ng-show" => "cancelingMember"%>
+        <a href="#" confirm="Are you sure you want to cancel this membership?" action="cancelMember(detailMember)">
+          cancel member
+        </a>
+      </div>
     </div>
     <h2>{{ detailMember.full_name }} - {{ detailMember.active && detailMember.membership || 'Inactive'}}</h2>
     <div ng-show="memberships.length > 1" class="change-member">
@@ -60,10 +69,6 @@
         </div>
       </div>
     </div>
-    <!--<div ng-show="detailMember.active" class="cancel-member">-->
-      <!--<button type="button" class="cancel" confirm="Are you sure you want to cancel this membership?" action="cancelMember(detailMember)">Cancel this membership</button>-->
-      <!--<%= image_tag "ajax-loader.gif", "ng-show" => "cancelingMember" %>-->
-    <!--</div>-->
   </div>
 </div>
 

@@ -24,7 +24,6 @@ class MembersController < ApplicationController
         if @member.valid?
           begin
           customer = Stripe::Customer.create(
-            :email => @member.email,
             :card  => params[:stripeToken],
             :plan => membership.id
           )
@@ -46,6 +45,18 @@ class MembersController < ApplicationController
     end
   end
 
+  def edit
+    @member = current_user.member(params[:id])
+
+    if request.put?
+      @member = current_user.member(params[:id])
+
+      if @member.update_attributes(params[:member])
+        redirect_to member_success_path
+      end
+    end
+  end
+
   def public_membership
     @user = User.find(params[:id])
     @member = Member.new
@@ -61,7 +72,6 @@ class MembersController < ApplicationController
         if @member.valid?
           begin
             customer = Stripe::Customer.create(
-              :email => @member.email,
               :card  => params[:stripeToken],
               :plan => membership.id
             )
@@ -150,7 +160,7 @@ class MembersController < ApplicationController
     member = current_user.member(params[:id])
 
     if member && member.cancel_subscription
-      MemberMailer.cancel_subscription(@member, @member.membership).deliver
+      MemberMailer.cancel_membership(member, member.membership).deliver
       render :json => {success: true}
     else
       render :json => {success: false, message: "There was an error with your request"}

@@ -269,6 +269,7 @@ angular.module('membr.services', [], function ($provide) {
     }
 
     Membership.create = function (membership) {
+      var membership = jQuery.extend(true, {}, membership);
       membership.is_private = membership.is_private == 1;
       membership.fee = membership.fee*100;
       membership.renewal_period = parseInt(membership.renewal_period);

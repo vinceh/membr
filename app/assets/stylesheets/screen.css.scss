@@ -627,6 +627,7 @@ h3 {
   }
   .change-member {
     @include font-light;
+    margin-left: 20px;
     span {
       margin-right: 5px;
     }
@@ -652,10 +653,24 @@ h3 {
     left: -115px;
     padding-right: 20px;
     height: 150px;
-    a {
-      display: block;
+    .link-wrap {
+      &.cancel-link a {
+        color: $error;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
       margin-bottom: 20px;
       text-align: right;
+      img {
+        position: absolute;
+        left: -20px;
+        height: 15px;
+      }
+      a {
+        position: relative;
+        line-height: 1.4em;
+      }
     }
   }
 }
@@ -982,5 +997,16 @@ h3 {
   @include transition-duration(0.3s);
   &.enter {
      top: 0;
+  }
+}
+
+.edit-member {
+  .member-cancel {
+    position: relative;
+    top: 9px;
+    left: 10px;
+  }
+  .errorExplanation {
+    margin-bottom: 30px;
   }
 }

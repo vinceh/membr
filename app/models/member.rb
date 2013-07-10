@@ -89,7 +89,7 @@ class Member < ActiveRecord::Base
     begin
       cu = Stripe::Customer.retrieve(stripe_customer_id)
       res = cu.cancel_subscription(:at_period_end => true)
-      if res.status == "canceled"
+      if res.cancel_at_period_end
         self.active = false
         save!
         true

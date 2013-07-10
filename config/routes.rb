@@ -10,11 +10,15 @@ Membr::Application.routes.draw do
 
   get 'invitation/error' => 'members#invite_failure', :as => :invite_failure
   get 'invitation/success' => 'members#invite_success', :as => :invite_success
+  get 'member/success' => 'members#member_update_success', :as => :member_success
   get 'invitation/:token' => 'members#invitation', :as => :invite
   post 'invitation/:token' => 'members#invitation', :as => :members_create
 
   get 'memberships/:id/join' => 'members#public_membership', :as => :public_invite
   post 'memberships/:id/join' => 'members#public_membership', :as => :members_public_create
+
+  get 'member/:id/edit' => 'members#edit', :as => :edit_member
+  put 'member/:id/edit' => 'members#edit', :as => :update_member
 
   # Stripe Webhook
   post 'stripe-event' => 'events#stripe_event'

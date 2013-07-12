@@ -20,7 +20,8 @@
           <th>Email</th>
           <th>Phone</th>
           <th>Joined</th>
-          <th>Payment</th>
+          <th>Last Payment</th>
+          <th>Status</th>
         </tr>
       </thead>
       <tbody>
@@ -31,6 +32,7 @@
           <td>{{ m.phone }}</td>
           <td>{{ m.joined }}</td>
           <td>{{ m.payment && "Paid" || "Not Paid"}}</td>
+          <td>{{ m.cancel_at_period_end && ('Membership ending ' + m.plan_ending_date) || 'Member Active'}}</td>
         </tr>
       </tbody>
     </table>

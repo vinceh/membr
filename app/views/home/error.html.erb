@@ -1,0 +1,13 @@
+<style type="text/css">
+  html, body {
+    height: 100%;
+  }
+</style>
+
+<div class="message-wrap">
+  <div class="container message">
+    <h2 class="error">Whoops..</h2>
+    <p><%= @message %></p>
+    <%= button_to "Visit Home", @route, :method => "get", :class => "btn-secondary" %>
+  </div>
+</div>

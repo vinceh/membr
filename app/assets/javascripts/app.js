@@ -56,8 +56,33 @@ function AppCtrl($scope, $location, $http, Membership, Member, $q, $timeout) {
     });
   }
 
-  $scope.editMembership = function(m) {
+  $scope.editMembership = function(m, index) {
     $scope.memberEdit = jQuery.extend({}, m);;
+    $scope.memberEdit.listIndex = index;
+    $('.membership-edit').appendTo($('#membership'+index));
+    $scope.memberEditOpen = true;
+
+    console.log('ha');
+  }
+
+  $scope.deleteMembership = function(membership) {
+    $scope.deletingMembership = true;
+    $scope.$apply();
+
+    // dirty hack
+    $('.cancel-member a').attr('disabled', true);
+
+    Membership.delete_membership(membership).then(function(data) {
+      // dirty hacks
+      $('.cancel-link a').attr('disabled', false);
+      $('.membership-edit').appendTo($('.memberships'));
+
+      $scope.memberships = _.reject($scope.memberships, function(m) {return m.id == membership.id});
+      $scope.members = data.members;
+      $scope.deletingMembership = false;
+      $scope.memberEditOpen = false;
+      $scope.show_success("Membership successfully deleted");
+    });
   }
 
   $scope.openInvite = function() {
@@ -87,24 +112,22 @@ function AppCtrl($scope, $location, $http, Membership, Member, $q, $timeout) {
     $scope.memberDetailOpen = true;
     $scope.detailMember = member;
     $scope.loadingInvoices = true;
+    $scope.detailMemberMemberships = $scope.memberships;
 
-    if ($scope.memberships.length > 0 && !member.active) {
-      $scope.detailMemberMemberships = $scope.memberships;
-      $scope.changeMembership = $scope.detailMemberMemberships[0].id;
-      $timeout(function(){
-        $('#change-membership').trigger('update');
-      });
-    }
-    else if ($scope.memberships.length > 1 && member.active) {
+    if (member.active && !member.plan_ending_date) {
       $scope.detailMemberMemberships =
         _.reject($scope.memberships, function(m) {
           return m.name == member.membership;
         });
-      $scope.changeMembership = $scope.detailMemberMemberships[0].id;
-      $timeout(function(){
-        $('#change-membership').trigger('update');
-      });
     }
+
+    if ($scope.detailMemberMemberships.length > 0 ) {
+      $scope.changeMembership = $scope.detailMemberMemberships[0].id;
+    }
+
+    $timeout(function(){
+      $('#change-membership').trigger('update');
+    });
 
     Member.invoices_for(member.id).then(function(data) {
       $scope.loadingInvoices = false;
@@ -119,17 +142,18 @@ function AppCtrl($scope, $location, $http, Membership, Member, $q, $timeout) {
     $scope.$apply();
 
     // dirty hack
-    $('.cancel-member button').attr('disabled', true);
+    $('.cancel-link a').attr('disabled', true);
 
     Member.cancel_member(member.id).then(function(data) {
-      $scope.members = _.without($scope.members, member);
-      $scope.inactiveMembers.push(member);
+
+      var index = $scope.members.indexOf(member);
+      $scope.members[index] = data.member;
       $scope.show_success("Membership successfully canceled");
       $scope.cancelingMember = false;
       $scope.memberDetailOpen = false;
 
       // dirty hack
-      $('.cancel-member button').attr('disabled', false);
+      $('.cancel-link a').attr('disabled', false);
 
       $timeout(function(){
         $('table').trigger('update');
@@ -200,6 +224,33 @@ function AppCtrl($scope, $location, $http, Membership, Member, $q, $timeout) {
   $scope.revenue_text = function(fee, count) {
     return Math.round((fee*count)/100).toFixed(2);
   }
+
+  $scope.sendPaymenter = function(member) {
+    $scope.sendingPaymenter = true;
+    $scope.$apply();
+
+    Member.send_paymenter(member).then(function() {
+      $scope.show_success("Payment update email successfully sent");
+      $scope.sendingPaymenter = false;
+      $scope.memberDetailOpen = false;
+    });
+  }
+
+  $scope.updateMembership = function(membership) {
+    $scope.updatingMembership = true;
+
+    Membership.update(membership).then(function(data) {
+      $scope.show_success("Membership successfully updated");
+
+      // dirty hack
+      $('.membership-edit').appendTo($('.memberships'));
+
+      $scope.memberships[membership.listIndex] = data.membership;
+      $scope.members = data.members;
+      $scope.updatingMembership = false;
+      $scope.memberEditOpen = false;
+    });
+  }
 }
 
 angular.module('membr.services', [], function ($provide) {
@@ -244,6 +295,12 @@ angular.module('membr.services', [], function ($provide) {
       })
     }
 
+    Member.send_paymenter = function(member) {
+      return $http.post('api/members/sendPaymenter', {id: member.id}).then(function (response) {
+        return response.data;
+      })
+    }
+
     Member.urls = {
       bulk_invite: '/api/members/bulkInvite'
     };
@@ -280,13 +337,26 @@ angular.module('membr.services', [], function ($provide) {
     }
 
     Membership.get = function (page) {
-      return $http.get('/api/bg?page=' + page).then(function (response) {
+      return $http.get('api/bg?page=' + page).then(function (response) {
         return new Boardgame(response.data);
       })
     }
 
     Membership.get_all = function () {
-      return $http.get('/api/memberships/all').then(function (response) {
+      return $http.get('api/memberships/all').then(function (response) {
+        return response.data;
+      })
+    }
+
+    Membership.update = function (membership) {
+      membership.is_private = membership.is_private == 1;
+      return $http.post('api/memberships/update', {id: membership.id, membership: membership}).then(function (response) {
+        return response.data;
+      })
+    }
+
+    Membership.delete_membership = function(membership) {
+      return $http.post('api/memberships/delete/' + membership.id).then(function (response) {
         return response.data;
       })
     }

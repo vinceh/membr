@@ -8,11 +8,14 @@ Membr::Application.routes.draw do
 
   root :to => "home#index"
 
-  get 'invitation/error' => 'members#invite_failure', :as => :invite_failure
-  get 'invitation/success' => 'members#invite_success', :as => :invite_success
-  get 'member/success' => 'members#member_update_success', :as => :member_success
+  get 'success' => 'home#success', :as => :success
+  get 'error' => 'home#error', :as => :error
+
   get 'invitation/:token' => 'members#invitation', :as => :invite
   post 'invitation/:token' => 'members#invitation', :as => :members_create
+
+  get 'paymentUpdate/:token' => 'members#payment_update', :as => :payment_change
+  post 'paymentUpdate/:token' => 'members#payment_update', :as => :payment_update
 
   get 'memberships/:id/join' => 'members#public_membership', :as => :public_invite
   post 'memberships/:id/join' => 'members#public_membership', :as => :members_public_create
@@ -30,6 +33,8 @@ Membr::Application.routes.draw do
   # membership
   post 'api/memberships/create' => 'memberships#create'
   get 'api/memberships/all' => 'memberships#get_all'
+  post 'api/memberships/update' => 'memberships#update'
+  post 'api/memberships/delete/:id' => 'memberships#delete'
 
   # member
   post 'api/member/invite' => 'members#invite'
@@ -39,4 +44,5 @@ Membr::Application.routes.draw do
   post 'api/members/change' => 'members#change_membership'
   get 'api/members/invoice/:id' => 'members#invoices_for'
   put 'api/members/cancel/:id' => 'members#cancel_member'
+  post 'api/members/sendPaymenter' => 'members#send_paymenter'
 end

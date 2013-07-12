@@ -205,7 +205,6 @@ table {
 }
 
 .cancel {
-  @include inline-block;
   @include font-light;
   color: $error;
   padding: 9px 15px;
@@ -482,11 +481,23 @@ h3 {
     padding: 0;
     margin-top: 30px;
     border-bottom: none;
+    .cancel-member {
+      height: 32px;
+      margin-top: 20px;
+      a {
+        color: $error;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+      img {
+        height: 16px;
+        position: relative;
+        left: 3px;
+        top: 2px;
+      }
+    }
   }
-}
-
-.membership-edit {
-  display: none;
 }
 
 .inactiveMembers {

@@ -1,13 +1,16 @@
 class MembersController < ApplicationController
   protect_from_forgery
 
-  before_filter :authenticate_user!, :except => [:invitation, :invite_failure, :invite_success, :public_membership]
+  before_filter :authenticate_user!, :except => [:invitation, :public_membership]
 
   def invitation
     @creatable = Creatable.find_by_token(params[:token])
 
     if !@creatable || (Time.now - @creatable.created_at) > 7.days
-      redirect_to invite_failure_path
+      render_error({
+         :message => "This invitation is either invalid or has expired.  Contact the owner of the membership to request another invitation.",
+         :route => root_url
+       })
     end
 
     @member = Member.new
@@ -21,25 +24,16 @@ class MembersController < ApplicationController
         @member.developer = false
         @member.membership = membership
 
-        if @member.valid?
-          begin
-          customer = Stripe::Customer.create(
-            :card  => params[:stripeToken],
-            :plan => membership.id
-          )
-
-          @member.stripe_customer_id = customer.id
-          @member.save
-
-          MemberMailer.joined_membership(@member, membership).deliver
+        if @member.valid? && @member.join_membership(membership, params[:stripeToken])
 
           creatable.destroy
-          redirect_to :action => :invite_success
-
-          rescue Stripe::CardError => e
-            flash[:error] = e.message
-            redirect_to charges_path
-          end
+          render_success({
+             :message => "You have successfully joined a membership.  Contact the membership owner if you have any questions.",
+             :route => root_url
+           })
+        else
+          flash[:error] = e.message
+          redirect_to charges_path
         end
       end
     end
@@ -52,7 +46,10 @@ class MembersController < ApplicationController
       @member = current_user.member(params[:id])
 
       if @member.update_attributes(params[:member])
-        redirect_to member_success_path
+        render_success({
+           :message => "Member updated.",
+           :route => user_root_path
+         })
       end
     end
   end
@@ -61,34 +58,25 @@ class MembersController < ApplicationController
     @user = User.find(params[:id])
     @member = Member.new
 
-    if request.post?
-      membership = Membership.find(params[:membership])
+      if request.post?
+        membership = Membership.find(params[:membership])
 
-      if membership
-        @member = Member.new(params[:member])
-        @member.developer = false
-        @member.membership = membership
+        if membership
+          @member = Member.new(params[:member])
+          @member.developer = false
+          @member.membership = membership
 
-        if @member.valid?
-          begin
-            customer = Stripe::Customer.create(
-              :card  => params[:stripeToken],
-              :plan => membership.id
-            )
+          if @member.valid? && @member.join_membership(membership, params[:stripeToken])
 
-            @member.stripe_customer_id = customer.id
-            @member.save
-
-            MemberMailer.joined_membership(@member, membership).deliver
-
-            redirect_to :action => :invite_success
-
-          rescue Stripe::CardError => e
+            render_success({
+                             :message => "You have successfully joined a membership.  Contact the membership owner if you have any questions.",
+                             :route => root_url
+                           })
+          else
             flash[:error] = e.message
             redirect_to charges_path
           end
         end
-      end
     end
   end
 
@@ -161,7 +149,7 @@ class MembersController < ApplicationController
 
     if member && member.cancel_subscription
       MemberMailer.cancel_membership(member, member.membership).deliver
-      render :json => {success: true}
+      render :json => {success: true, member: member.to_json}
     else
       render :json => {success: false, message: "There was an error with your request"}
     end
@@ -181,6 +169,44 @@ class MembersController < ApplicationController
       end
     else
       render :json => {success: false, message: "There was an error with your request"}
+    end
+  end
+
+  def send_paymenter
+    member = current_user.member(params[:id])
+
+    if member
+      paymenter = Paymenter.new
+      paymenter.member = member
+
+      if paymenter.save!
+        MemberMailer.paymenter(paymenter).deliver
+        render :json => {success: true}
+      end
+    end
+  end
+
+  def payment_update
+    @paymenter = Paymenter.find_by_token(params[:token])
+
+    if !@paymenter || (Time.now - @paymenter.created_at) > 7.days
+      render_error({
+        :message => "This payment update token is invalid or has expired.",
+        :route => root_url
+      })
+    end
+
+    if request.post?
+      paymenter = Paymenter.find(params[:paymenter_id])
+      @member = paymenter.member
+
+      if @member.update_payment(params[:stripeToken])
+        paymenter.destroy
+        render_success({
+          :message => "Your payment has been successfully updated.",
+          :route => root_url
+        })
+      end
     end
   end
 end

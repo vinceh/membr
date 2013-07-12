@@ -7,7 +7,7 @@
 <div class="message-wrap">
   <div class="container message success">
     <h2 class="success">Success!</h2>
-    <p>Member updated.</p>
-    <%= button_to "Visit Home", user_root_path, :method => "get", :class => "btn-secondary" %>
+    <p><%= @message %></p>
+    <%= button_to "Visit Home", @route, :method => "get", :class => "btn-secondary" %>
   </div>
 </div>

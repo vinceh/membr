@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130701024046) do
+ActiveRecord::Schema.define(:version => 20130711232230) do
 
   create_table "admins", :force => true do |t|
     t.string   "email",               :default => "", :null => false
@@ -53,12 +53,14 @@ ActiveRecord::Schema.define(:version => 20130701024046) do
     t.string   "zipcode"
     t.string   "phone"
     t.boolean  "developer"
-    t.datetime "created_at",                            :null => false
-    t.datetime "updated_at",                            :null => false
+    t.datetime "created_at",                              :null => false
+    t.datetime "updated_at",                              :null => false
     t.string   "stripe_customer_id"
-    t.boolean  "paid",               :default => false
+    t.boolean  "paid",                 :default => false
     t.datetime "paid_time"
-    t.boolean  "active",             :default => true,  :null => false
+    t.boolean  "active",               :default => true,  :null => false
+    t.datetime "plan_ending_date"
+    t.boolean  "cancel_at_period_end", :default => false
   end
 
   create_table "memberships", :force => true do |t|
@@ -67,8 +69,16 @@ ActiveRecord::Schema.define(:version => 20130701024046) do
     t.boolean  "is_private"
     t.integer  "fee"
     t.integer  "renewal_period"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
+    t.boolean  "archived",       :default => false, :null => false
+  end
+
+  create_table "paymenters", :force => true do |t|
+    t.string   "token"
+    t.integer  "member_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "users", :force => true do |t|

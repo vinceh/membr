@@ -1,9 +1,10 @@
 class Member < ActiveRecord::Base
   belongs_to :membership
+  has_many :paymenters
 
   validates_presence_of :membership_id, :email
   validates_presence_of :full_name, :street_address, :city, :state, :country, :zipcode, :phone, :if => "!developer"
-  attr_accessible :membership_id, :full_name, :email, :street_address, :city, :state, :country, :zipcode, :phone, :developer, :paid, :active
+  attr_accessible :membership_id, :full_name, :email, :street_address, :city, :state, :country, :zipcode, :phone, :developer, :paid, :active, :plan_ending_date, :cancel_at_period_end
 
   def to_json
     {
@@ -16,7 +17,9 @@ class Member < ActiveRecord::Base
       last_activity: updated_at.strftime("%b %m, %Y"),
       payment: paid,
       payment_time: (paid_time.strftime("%b %m, %Y") if paid_time),
-      membership: membership.name
+      membership: membership.name,
+      plan_ending_date: (plan_ending_date.strftime("%b %m, %Y") if plan_ending_date),
+      cancel_at_period_end: cancel_at_period_end
     }
   end
 
@@ -90,7 +93,8 @@ class Member < ActiveRecord::Base
       cu = Stripe::Customer.retrieve(stripe_customer_id)
       res = cu.cancel_subscription(:at_period_end => true)
       if res.cancel_at_period_end
-        self.active = false
+        self.plan_ending_date = Time.at(res.current_period_end)
+        self.cancel_at_period_end = true
         save!
         true
       else
@@ -108,6 +112,8 @@ class Member < ActiveRecord::Base
         res = cu.update_subscription(:plan => membership.id, :prorate => false)
         if res.status == "active"
           self.active = true
+          self.cancel_at_period_end = false
+          self.plan_ending_date = Time.at(res.current_period_end)
           self.membership = membership
           save!
           return self
@@ -119,5 +125,65 @@ class Member < ActiveRecord::Base
       end
     end
     nil
+  end
+
+  def update_payment(token)
+    begin
+      cu = Stripe::Customer.retrieve(stripe_customer_id)
+      cu.card = token
+      cu.save
+
+      MemberMailer.payment_updated(self).deliver
+
+      true
+    rescue Stripe::CardError => e
+      nil
+    end
+  end
+
+  def join_membership(membership, token)
+    begin
+      customer = Stripe::Customer.create(
+        :card  => token,
+        :plan => membership.id
+      )
+
+      self.stripe_customer_id = customer.id
+      self.plan_ending_date = Time.at(customer.subscription.current_period_end)
+      save
+
+      MemberMailer.joined_membership(self, membership).deliver
+      true
+    rescue Stripe::CardError => e
+      nil
+    end
+  end
+
+  def self.all_active(user)
+    members = user.members
+
+    returnee = []
+
+    if members
+      members.each do |m|
+        returnee << m.to_json if m.active
+      end
+    end
+
+    return returnee
+  end
+
+  def self.all_inactive(user)
+    members = user.members
+
+    returnee = []
+
+    if members
+      members.each do |m|
+        returnee << m.to_json if !m.active
+      end
+    end
+
+    return returnee
   end
 end

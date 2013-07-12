@@ -22,12 +22,22 @@ class MemberMailer < ActionMailer::Base
   def cancel_membership(member, membership)
     @member = member
     @membership = membership
-    mail(:to => @member.email, :subject => "Your Membr membership has been canceled.")
+    mail(:to => @member.email, :subject => "Your Membr membership has been canceled")
   end
 
   def change_membership(member, membership)
     @member = member
     @membership = membership
     mail(:to => @member.email, :subject => "Your Membr membership has been changed")
+  end
+
+  def paymenter(paymenter)
+    @paymenter = paymenter
+    mail(:to => @paymenter.member.email, :subject => "Please update your payment details")
+  end
+
+  def payment_updated(member)
+    @member = member
+    mail(:to => @member.email, :subject => "Your payment details have been udpated")
   end
 end

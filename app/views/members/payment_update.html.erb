@@ -1,0 +1,21 @@
+<% content_for :head do %>
+  <%= javascript_include_tag "https://ajax.aspnetcdn.com/ajax/jquery.validate/1.8.1/jquery.validate.min.js" %>
+  <%= javascript_include_tag "https://js.stripe.com/v1/" %>
+<% end %>
+
+<div class="container join">
+  <h1>Change your payment</h1>
+
+  <div class="invite-wrap">
+    <%= form_tag payment_update_path(:paymenter_id => @paymenter.id) do -%>
+      <div class="billing">
+        <h3>Billing</h3>
+      </div>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent lobortis metus dui, nec egestas nibh scelerisque in. </p>
+      <script src="https://checkout.stripe.com/v2/checkout.js" class="stripe-button"
+              data-key="pk_test_3v97jDIcjFOnVPo1oz5ohyRo"
+              data-description="Update your credit card"></script>
+      <%= image_tag "outline.png", :class => "stripe" -%>
+    <% end %>
+  </div>
+</div>

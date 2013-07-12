@@ -95,7 +95,29 @@ class Membership < ActiveRecord::Base
     end
   end
 
-  def send_invite
-    m = Membership.new
+  def update_membership(attr)
+    self.name = attr[:name]
+    self.is_private = attr[:is_private]
+    save!
+    self
+  end
+
+  def update_stripe_name
+    p = Stripe::Plan.retrieve(id.to_s)
+    p.name = name
+    p.save
+  end
+
+  def stripe_delete
+    self.archived = true
+    save!
+    plan = Stripe::Plan.retrieve(id.to_s)
+    plan.delete
+
+    members.each do |m|
+      m.cancel_subscription
+    end
+
+    members
   end
 end

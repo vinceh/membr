@@ -23,6 +23,19 @@ class MembershipsController < ApplicationController
     end
   end
 
+  def update
+    m = current_user.membership(params[:id])
+    if m && m.update_membership(params[:membership])
+      m.update_stripe_name
+
+      members = Member.all_active(current_user)
+
+      render :json => {success: true, membership: m.to_json, members: members}
+    else
+      render :json => error("Failed to update membership")
+    end
+  end
+
   def retrieve
     m = current_user.membership(params[:id])
 
@@ -33,19 +46,8 @@ class MembershipsController < ApplicationController
     end
   end
 
-  def update
-    m = current_user.membership(params[:id])
-    m.update_attributes(params[:membership])
-
-    if m.save!
-      render :json => success(m.to_json)
-    else
-      render :json => error(m.errors)
-    end
-  end
-
   def get_all
-    memberships = current_user.memberships
+    memberships = current_user.memberships.where(archived: false).order("created_at ASC")
 
     returnee = []
     memberships.each do |m|
@@ -55,12 +57,18 @@ class MembershipsController < ApplicationController
     render :json => returnee.to_json
   end
 
-  # TODO
   def delete
     m = current_user.membership(params[:id])
 
-    if m && m.destroy!
+    if m
+      new_members = m.stripe_delete
+      members = Member.all_active(current_user)
 
+      if new_members
+        render :json => {success: true, members: members}
+      else
+        render :json => {success: true}
+      end
     end
   end
 

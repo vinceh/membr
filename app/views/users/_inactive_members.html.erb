@@ -39,17 +39,18 @@
         <a href="member/{{ detailMember.id }}/edit">edit details</a>
       </div>
       <div class="link-wrap">
-        <a href="#">send payment<br/> update email</a>
+        <a href="#" ng-click="sendPaymenter(detailMember)">send payment<br/> update email</a>
+        <%= image_tag "ajax-loader.gif", "ng-show" => "sendingPaymenter"%>
       </div>
-      <div class="link-wrap cancel-link" ng-show="detailMember.active">
+      <div class="link-wrap cancel-link" ng-show="detailMember.active && !detailMember.cancel_at_period_end">
         <%= image_tag "ajax-loader.gif", "ng-show" => "cancelingMember"%>
         <a href="#" confirm="Are you sure you want to cancel this membership?" action="cancelMember(detailMember)">
           cancel member
         </a>
       </div>
     </div>
-    <h2>{{ detailMember.full_name }} - {{ detailMember.active && detailMember.membership || 'Inactive'}}</h2>
-    <div ng-show="memberships.length > 1" class="change-member">
+    <h2>{{ detailMember.full_name }} - {{ detailMember.active && detailMember.membership || 'Inactive'}} {{ detailMember.cancel_at_period_end && (', ending on ' + detailMember.plan_ending_date) || '' }}</h2>
+    <div ng-show="detailMemberMemberships.length > 0" class="change-member">
       <span>Change membership to</span>
       <select id="change-membership" ng-model="changeMembership" ng-options="m.id as m.name for m in detailMemberMemberships"></select>
       <button type="button" class="flat-btn" confirm="Are you sure you want to change this membership?" action="changeMember(detailMember, changeMembership)">GO</button>

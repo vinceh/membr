@@ -1,16 +1,33 @@
 <div class="inner panel members">
   <div class="detail">
-    <h2>You have {{ members.length }} member{{ members.length != 1 && 's' || '' }}</h2>
+    <h2><span>{{ members.length }}</span> current member{{ members.length != 1 && 's' || '' }}</h2>
 
-    <p ng-show="memberships.length == 0">You don't have any memberships yet.  Go to the 'Memberships' section and create one.</p>
-    <p ng-show="memberships.length > 0 && hasPublicMemberships()">The public URL link will allow anyone to join your public memberships.  If you would like to invite someone to a private membership, use the "Invite Someone" button.</p>
-    <p class="member-help" ng-show="memberships.length > 0 && !hasPublicMemberships()">If you would like to invite someone to a private membership, use the "Invite Someone" button.</p>
+    <p ng-show="memberships.length == 0">
+      You don't have any memberships.  Navigate to the memberships tab and create one!
+    </p>
 
-    <div class="public-link" ng-show="memberships.length > 0 && hasPublicMemberships()">
-      <div>Public URL</div>
-      <input type="text" value=<%= request.protocol + request.host_with_port + public_invite_path(current_user.id) %> readonly>
+    <div class="member-help-panel" ng-show="memberships.length > 0 && hasPublicMemberships()">
+      <div class="public-link-wrap helper">
+        <div class="icon">
+          <%= image_tag 'achievement.png' %>
+        </div>
+        <h3>Public Membership Link</h3>
+        <p>Give this link to anyone and they will be able to join any of your public memberships</p>
+        <div class="public-link">
+          <input type="text" value=<%= request.protocol + request.host_with_port + public_invite_path(current_user.id) %> readonly>
+        </div>
+      </div>
+      <div class="invite-button-wrap helper" ng-show="memberships.length > 0">
+        <div class="icon">
+          <%= image_tag 'achievement.png' %>
+        </div>
+        <h3>Invite Someone</h3>
+        <p>Use this button to invite someone personally to any one of your memberships</p>
+        <button class="btn" ng-click="openInvite()" >Invite someone</button>
+      </div>
     </div>
-    <button class="btn" ng-click="openInvite()" ng-show="memberships.length > 0">Invite someone</button>
+
+    <hr/>
 
     <table id="members" ng-hide="members.length == 0">
       <thead>

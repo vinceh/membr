@@ -9,3 +9,9 @@ task :create_member => :environment do
     m.save!
   end
 end
+
+# TODO
+task :call_page => :environment do
+  uri = URI.parse('http://www.membr.herokuapp.com/')
+  Net::HTTP.get(uri)
+end

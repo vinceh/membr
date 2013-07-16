@@ -2,7 +2,7 @@ Hi there!
 
 You have received an invitation for <%= @membership.name %>.  Please follow the link below if you wish to accept this membership:
 
-<%= request.protocol + request.host_with_port + invite_path(:token => @creatable.token) %>
+<%= @request.protocol + @request.host_with_port + invite_path(:token => @creatable.token) %>
 
 The link will expire in 14 days, so make sure you sign up before then.
 

@@ -42,7 +42,7 @@ class Member < ActiveRecord::Base
         creatable.membership_id = membership.id
         creatable.save!
 
-        MemberMailer.send_invite(creatable).deliver
+        MemberMailer.send_invite(creatable, request).deliver
       end
     end
 
@@ -62,7 +62,7 @@ class Member < ActiveRecord::Base
           creatable.membership_id = membership.id
           creatable.save!
 
-          MemberMailer.send_invite(creatable).deliver
+          MemberMailer.send_invite(creatable, request).deliver
         end
       end
 

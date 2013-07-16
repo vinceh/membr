@@ -14,6 +14,7 @@ class User < ActiveRecord::Base
 
   has_many :memberships
   has_many :members, :through => :memberships
+  has_many :invoices, :through => :memberships
 
   def member(id)
     members.where(:id => id).first

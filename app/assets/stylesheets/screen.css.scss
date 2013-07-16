@@ -364,7 +364,7 @@ h3 {
     label:first-child {
       width: 90px;
       @include inline-block;
-      color: #111;
+      color: #666;
     }
     input[type="text"], input[type="number"] {
       width: 400px;
@@ -448,6 +448,14 @@ h3 {
     line-height: 40px;
     a {
       margin-right: 20px;
+    }
+  }
+  .logo {
+    float: left;
+    margin-top: 10px;
+    margin-left: 15px;
+    img {
+      height: 20px;
     }
   }
 }
@@ -1096,4 +1104,22 @@ h3 {
 hr {
   border: 0;
   border-top: 1px dashed #ddd;
+}
+
+/* admin */
+.admin {
+  margin-top: 100px;
+  h2 {
+    margin-bottom: 40px;
+  }
+  .user {
+    font-size: 15px;
+    display: block;
+    @include font-light;
+    padding: 20px;
+    @include border-radius(3px);
+    background-color: #eee;
+    margin-bottom: 20px;
+    @include box-shadow(1px 1px 0 #ddd);
+  }
 }

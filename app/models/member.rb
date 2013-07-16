@@ -23,14 +23,6 @@ class Member < ActiveRecord::Base
     }
   end
 
-  def self.all_inactive
-    where(:active => false).all
-  end
-
-  def self.all_active
-    where(:active => true).all
-  end
-
   def self.bulk_invite(file, user)
     require 'iconv'
 

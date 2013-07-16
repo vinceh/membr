@@ -1,0 +1,8 @@
+<div class="container admin">
+  <h2><%= @users.length %> members OMG :D</h2>
+  <% @users.each do |u| %>
+    <%= link_to admin_user_detail_path(u.id), class: 'user' do %>
+      [ paid ] <%= u.organization %>
+    <% end %>
+  <% end %>
+</div>

@@ -4,7 +4,10 @@ Membr::Application.routes.draw do
     get 'home', :to => 'users#home', :as => :user_root
   end
 
-  devise_for :admins, :skip => [:registration]
+  devise_for :admins, :skip => [:registration] do
+    get 'controlpanel', :to => 'admins#controlpanel', :as => :admin_root
+    get 'controlpanel/user/:id', :to => 'admins#user_detail', :as => :admin_user_detail
+  end
 
   root :to => "home#index"
 

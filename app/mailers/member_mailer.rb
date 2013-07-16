@@ -16,7 +16,7 @@ class MemberMailer < ActionMailer::Base
   def invoice(member, membership)
     @member = member
     @membership = membership
-    mail(:to => @member.email, :subject => "[billing] Your Membr invoice for #{Time.now.strftime("%b %m, %Y")} is available")
+    mail(:to => @member.email, :subject => "[billing] Your Membr invoice for #{Time.now.strftime("%b %d, %Y")} is available")
   end
 
   def cancel_membership(member, membership)

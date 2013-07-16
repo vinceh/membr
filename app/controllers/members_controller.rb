@@ -138,7 +138,7 @@ class MembersController < ApplicationController
     )
 
     event.data.each do |i|
-      i.date = Time.at(i.date).strftime("%b %m, %Y")
+      i.date = Time.at(i.date).strftime("%b %d, %Y")
     end
 
     render :json => {invoices: event.data}

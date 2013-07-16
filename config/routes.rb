@@ -7,6 +7,8 @@ Membr::Application.routes.draw do
   devise_for :admins, :skip => [:registration] do
     get 'controlpanel', :to => 'admins#controlpanel', :as => :admin_root
     get 'controlpanel/user/:id', :to => 'admins#user_detail', :as => :admin_user_detail
+    post 'controlpanel/mark-as-paid/:id/:timestamp', :to => 'admins#mark_as_paid', :as => :mark_paid
+    post 'controlpanel/mark-as-unpaid/:id/:timestamp', :to => 'admins#mark_as_unpaid', :as => :mark_unpaid
   end
 
   root :to => "home#index"

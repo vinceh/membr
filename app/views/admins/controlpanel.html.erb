@@ -2,7 +2,13 @@
   <h2><%= @users.length %> members OMG :D</h2>
   <% @users.each do |u| %>
     <%= link_to admin_user_detail_path(u.id), class: 'user' do %>
-      [ paid ] <%= u.organization %>
+      [
+        <% if Invoice.user_has_outstanding_invoices(u) %>
+          <span class="error">oustanding</span>
+        <% else %>
+          <span class="success">no outstanding</span>
+        <% end %>
+      ] <%= u.organization %>
     <% end %>
   <% end %>
 </div>

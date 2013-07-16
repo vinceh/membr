@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(:version => 20130716000846) do
   end
 
   create_table "invoices", :force => true do |t|
+    t.integer  "member_id"
     t.string   "stripe_charge_id"
     t.integer  "amount"
     t.integer  "stripe_fee"

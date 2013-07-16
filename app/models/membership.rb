@@ -39,7 +39,7 @@ class Membership < ActiveRecord::Base
       interval: 1
     },
     WEEKLY: {
-      value: 1,
+      value: 4,
       stripe: 'week',
       interval: 1
     }

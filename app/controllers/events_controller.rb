@@ -27,6 +27,12 @@ class EventsController < ApplicationController
           invoice.stripe_fee = event.data.object.fee
           invoice.member = Member.find_by_stripe_customer_id(event.data.object.customer)
           invoice.save!
+        when 'customer.updated'
+          if ( event.data.previous_attributes.subscription )
+            member = Member.find_by_stripe_customer_id(event.data.object.id)
+            member.active = false
+            member.save!
+          end
       end
     end
 

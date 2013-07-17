@@ -114,7 +114,7 @@ function AppCtrl($scope, $location, $http, Membership, Member, $q, $timeout) {
     $scope.loadingInvoices = true;
     $scope.detailMemberMemberships = $scope.memberships;
 
-    if (member.active && !member.plan_ending_date) {
+    if (member.active && !member.cancel_at_period_end) {
       $scope.detailMemberMemberships =
         _.reject($scope.memberships, function(m) {
           return m.name == member.membership;

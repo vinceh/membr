@@ -114,7 +114,7 @@ class MembersController < ApplicationController
     membership = current_user.membership(creatable.membership.id)
 
     if membership && creatable.save!
-      MemberMailer.send_invite(creatable).deliver
+      MemberMailer.send_invite(creatable, request).deliver
       render :json => {success: true}
     else
       render :json => {success: false, message: "Failed to send invite"}
@@ -138,7 +138,7 @@ class MembersController < ApplicationController
     )
 
     event.data.each do |i|
-      i.date = Time.at(i.date).strftime("%b %m, %Y")
+      i.date = Time.at(i.date).strftime("%b %d, %Y")
     end
 
     render :json => {invoices: event.data}
@@ -180,7 +180,7 @@ class MembersController < ApplicationController
       paymenter.member = member
 
       if paymenter.save!
-        MemberMailer.paymenter(paymenter).deliver
+        MemberMailer.paymenter(paymenter, request).deliver
         render :json => {success: true}
       end
     end

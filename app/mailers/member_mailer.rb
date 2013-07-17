@@ -1,9 +1,10 @@
 class MemberMailer < ActionMailer::Base
   default from: "c.tnecniv@gmail.com"
 
-  def send_invite(creatable)
+  def send_invite(creatable, request)
     @creatable = creatable
     @membership = creatable.membership
+    @request = request
     mail(:to => @creatable.email, :subject => "Membership Invite")
   end
 
@@ -16,7 +17,7 @@ class MemberMailer < ActionMailer::Base
   def invoice(member, membership)
     @member = member
     @membership = membership
-    mail(:to => @member.email, :subject => "[billing] Your Membr invoice for #{Time.now.strftime("%b %m, %Y")} is available")
+    mail(:to => @member.email, :subject => "[billing] Your Membr invoice for #{Time.now.strftime("%b %d, %Y")} is available")
   end
 
   def cancel_membership(member, membership)
@@ -31,8 +32,9 @@ class MemberMailer < ActionMailer::Base
     mail(:to => @member.email, :subject => "Your Membr membership has been changed")
   end
 
-  def paymenter(paymenter)
+  def paymenter(paymenter, request)
     @paymenter = paymenter
+    @request = request
     mail(:to => @paymenter.member.email, :subject => "Please update your payment details")
   end
 

@@ -24,8 +24,15 @@ class EventsController < ApplicationController
           invoice = Invoice.new
           invoice.stripe_charge_id = event.data.object.id
           invoice.amount = event.data.object.amount
-          invoice.fee = event.data.object.fee
+          invoice.stripe_fee = event.data.object.fee
+          invoice.member = Member.find_by_stripe_customer_id(event.data.object.customer)
           invoice.save!
+        when 'customer.updated'
+          if ( event.data.previous_attributes.subscription )
+            member = Member.find_by_stripe_customer_id(event.data.object.id)
+            member.active = false
+            member.save!
+          end
       end
     end
 
@@ -33,7 +40,7 @@ class EventsController < ApplicationController
   end
 
   def test_stripe
-    id = 'evt_2BPDg1nZsqogaS'
+    id = 'evt_2CsdLAslp8drr3'
 
     event = Stripe::Event.retrieve(id)
 
@@ -43,7 +50,7 @@ class EventsController < ApplicationController
         invoice.stripe_charge_id = event.data.object.id
         invoice.amount = event.data.object.amount
         invoice.stripe_fee = event.data.object.fee
-        invoice.membership = event.data.object.fee
+        invoice.member = Member.find_by_stripe_customer_id(event.data.object.customer)
         invoice.save!
     end
 

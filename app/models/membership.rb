@@ -2,6 +2,7 @@ class Membership < ActiveRecord::Base
 
   belongs_to :user
   has_many :members
+  has_many :invoices, :through => :members
 
   validates_presence_of :name, :fee, :renewal_period
   validates_inclusion_of :is_private, :in => [true, false]
@@ -38,7 +39,7 @@ class Membership < ActiveRecord::Base
       interval: 1
     },
     WEEKLY: {
-      value: 1,
+      value: 4,
       stripe: 'week',
       interval: 1
     }

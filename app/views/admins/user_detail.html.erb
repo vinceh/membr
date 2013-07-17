@@ -1,3 +1,55 @@
 <div class="container admin">
-  <h2><%= @user.organization %></h2>
+  <h2>
+    <%= link_to '← back', admin_root_path %>
+    <%= @user.organization %>
+  </h2>
+  <% @invoices.each do |week, inv_list| %>
+    <div class="month">
+      <div class="heading">
+        [
+        <% if inv_list[0].paid_out %>
+          <span class="success">paid out</span>
+        <% else %>
+          <span class="error">not paid out</span>
+        <% end %>
+        ]
+        Week of <%= week.strftime('%b %d, %Y') %> - <%= invoice_amount(inv_list) %>
+        <div class="action">
+          <% if inv_list[0].paid_out %>
+            <%= button_to 'mark as unpaid', mark_unpaid_path(id: @user.id, timestamp: week.to_i ), :class => 'btn' %>
+          <% else %>
+            <%= button_to 'mark as paid', mark_paid_path(id: @user.id, timestamp: week.to_i ), :class => 'btn' %>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="invoices">
+        <% inv_list.each do |i| %>
+        <div class="invoice">
+          <%= i.created_at.strftime("%b %d, %Y") %>
+          <div class="totals">
+            <div>total charged: <span><%= number_to_currency(i.amount.to_f/100) %></span></div>
+            <div>Stripe fee: <span>-<%= number_to_currency(i.stripe_fee.to_f/100) %></span></div>
+            <div>sub-total: <span><%= number_to_currency((i.amount-i.stripe_fee).to_f/100) %></span></div>
+          </div>
+        </div>
+        <% end %>
+        <div class="net">month total: <span><%= invoice_amount(inv_list) %></span></div>
+      </div>
+    </div>
+  <% end %>
 </div>
+
+<script type="text/javascript">
+  $('.month').click(function() {
+    var $this = $(this);
+    if ( !$this.attr('data-open') ) {
+      $this.children('.invoices').show();
+      $this.attr('data-open', true);
+    }
+    else {
+      $this.children('.invoices').hide();
+      $this.attr('data-open', '');
+    }
+  });
+</script>

@@ -11,4 +11,9 @@ module ApplicationHelper
 
     raw options
   end
+
+  def invoice_amount(invoices)
+    fee = invoices.inject(0) { |sum, n| sum + n.amount-n.stripe_fee }
+    "$#{sprintf("%5.2f", fee/100)}"
+  end
 end

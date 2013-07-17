@@ -908,6 +908,14 @@ h3 {
   }
 }
 
+.success {
+  color: $success;
+}
+
+.error {
+  color: $error;
+}
+
 .stripe {
   position: relative;
   top: 9px;
@@ -1109,8 +1117,14 @@ hr {
 /* admin */
 .admin {
   margin-top: 100px;
-  h2 {
+  h2:first-child {
+    position: relative;
     margin-bottom: 40px;
+    a {
+      position: absolute;
+      left: -55px;
+      top: 5px;
+    }
   }
   .user {
     font-size: 15px;
@@ -1121,5 +1135,70 @@ hr {
     background-color: #eee;
     margin-bottom: 20px;
     @include box-shadow(1px 1px 0 #ddd);
+  }
+  .month {
+    background-color: #eee;
+    padding: 20px;
+    margin-bottom: 30px;
+    @include font-light;
+    @include box-shadow(1px 1px 0 #ddd);
+    &:hover {
+      cursor: pointer;
+      background-color: #e6e6e6;
+    }
+    .heading {
+      .action {
+        float: right;
+        input[type='submit'] {
+          font-size: 15px;
+          @include font-light;
+          padding: 3px 5px;
+          position: relative;
+          bottom: 3px;
+        }
+      }
+    }
+    .invoices {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: white;
+
+      @include border-radius(3px);
+      display: none;
+      .invoice {
+        color: #777;
+        font-size: 15px;
+        display: table;
+        width: 100%;
+        padding-bottom: 15px;
+        margin-bottom: 15px;
+        border-bottom: 1px solid #eee;
+        .totals {
+          float: right;
+          text-align: right;
+          span {
+            @include inline-block;
+            width: 75px;
+          }
+          &>div {
+            margin-bottom: 10px;
+            &:last-child {
+              margin-bottom: 0;
+              color: #444;
+            }
+          }
+        }
+      }
+      .net {
+        font-size: 15px;
+        color: #555;
+        font-weight: bold;
+        text-align: right;
+        span {
+          @include inline-block;
+          width: 75px;
+        }
+      }
+    }
   }
 }

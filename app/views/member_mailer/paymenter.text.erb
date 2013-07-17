@@ -2,7 +2,7 @@ Hi there!
 
 You have been requested to update your payment information.  Please follow the link below to easily change your
 
-<%= "http://localhost:3000"+payment_change_path(:token => @paymenter.token) %>
+<%= @request.protocol + @request.host_with_port + payment_change_path(:token => @paymenter.token) %>
 
 The link will expire in 14 days, so make sure you sign up before then.
 

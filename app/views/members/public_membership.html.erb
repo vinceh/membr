@@ -34,7 +34,7 @@
       </div>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent lobortis metus dui, nec egestas nibh scelerisque in. </p>
       <script src="https://checkout.stripe.com/v2/checkout.js" class="stripe-button"
-              data-key="pk_test_3v97jDIcjFOnVPo1oz5ohyRo"></script>
+              data-key="<%= ENV['PUBLISHABLE_KEY']%>"></script>
       <%= image_tag "outline.png", :class => "stripe" %>
     <% end %>
   </div>

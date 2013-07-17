@@ -1,6 +1,7 @@
 class Member < ActiveRecord::Base
   belongs_to :membership
   has_many :paymenters
+  has_many :invoices
 
   validates_presence_of :membership_id, :email
   validates_presence_of :full_name, :street_address, :city, :state, :country, :zipcode, :phone, :if => "!developer"
@@ -13,12 +14,12 @@ class Member < ActiveRecord::Base
       full_name: full_name,
       email: email,
       phone: phone,
-      joined: created_at.strftime("%b %m, %Y"),
-      last_activity: updated_at.strftime("%b %m, %Y"),
+      joined: created_at.strftime("%b %d, %Y"),
+      last_activity: updated_at.strftime("%b %d, %Y"),
       payment: paid,
-      payment_time: (paid_time.strftime("%b %m, %Y") if paid_time),
+      payment_time: (paid_time.strftime("%b %d, %Y") if paid_time),
       membership: membership.name,
-      plan_ending_date: (plan_ending_date.strftime("%b %m, %Y") if plan_ending_date),
+      plan_ending_date: (plan_ending_date.strftime("%b %d, %Y") if plan_ending_date),
       cancel_at_period_end: cancel_at_period_end
     }
   end
@@ -41,7 +42,7 @@ class Member < ActiveRecord::Base
         creatable.membership_id = membership.id
         creatable.save!
 
-        MemberMailer.send_invite(creatable).deliver
+        MemberMailer.send_invite(creatable, request).deliver
       end
     end
 
@@ -61,7 +62,7 @@ class Member < ActiveRecord::Base
           creatable.membership_id = membership.id
           creatable.save!
 
-          MemberMailer.send_invite(creatable).deliver
+          MemberMailer.send_invite(creatable, request).deliver
         end
       end
 

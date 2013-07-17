@@ -12,6 +12,6 @@ end
 
 # TODO
 task :call_page => :environment do
-  uri = URI.parse('http://www.membr.herokuapp.com/')
+  uri = URI.parse('http://membr.herokuapp.com/')
   Net::HTTP.get(uri)
 end

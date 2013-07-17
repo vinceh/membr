@@ -99,7 +99,7 @@ class Member < ActiveRecord::Base
   end
 
   def change_subscription(membership)
-    if (self.active && membership.id != self.membership_id) || !self.active
+    if (self.active && !self.cancel_at_period_end && membership.id != self.membership_id) || !self.active || self.cancel_at_period_end
       begin
         cu = Stripe::Customer.retrieve(stripe_customer_id)
         res = cu.update_subscription(:plan => membership.id, :prorate => false)

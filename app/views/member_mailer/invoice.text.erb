@@ -1,9 +1,8 @@
-Hi <%= @member.full_name %>,
+Your invoice for <%= Time.now.strftime("%b %d, %Y") %> is now available.
 
-Your Membr invoice on <%= Time.now.strftime("%b %d, %Y") %> is now available.
+You can been charged <%= @membership.display_fee %> for <%= @membership.name %>.
 
-You have been charged <%= @membership.display_fee %> for <%= @membership.name %>.
+If you have any questions or concerns, please contact support at support@getmembr.com
 
-Thank you,
-
-Team Membr
+Sincerely,
+<%= @membership.user.organization %>

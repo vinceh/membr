@@ -1,11 +1,16 @@
-Hi there!
+Hi <%= @member.full_name %>,
 
-You have been requested to update your payment information.  Please follow the link below to easily change your
+<%= @membership.user.organization %> has requested you to update your credit card information. This could be due to an invalid or expired credit card on file.
+
+Please update your payment information by clicking on this link:
 
 <%= @request.protocol + @request.host_with_port + payment_change_path(:token => @paymenter.token) %>
 
-The link will expire in 14 days, so make sure you sign up before then.
+This link will expire in 7 days.
 
-Thank you,
+In order to ensure your membership stays active, please update your payment information in the next 7 business days.
 
-Team Membr
+If you have any questions or concerns, please contact support at support@getmembr.com
+
+Sincerely,
+<%= @membership.user.organization %>

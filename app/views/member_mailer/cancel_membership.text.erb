@@ -1,1 +1,8 @@
-Membership Canceled.
+Hi <%= @member.full_name %>,
+
+Your <%= @membership.name %> has been cancelled, effective on <%= Time.now.strftime("%b %d, %Y") %>.
+
+If you have any questions or concerns, please contact at support@getmembr.com
+
+Sincerely,
+<%= @membership.user.organization %>

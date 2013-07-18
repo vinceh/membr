@@ -1,11 +1,16 @@
-Hi there!
+Hi there,
 
-You have received an invitation for <%= @membership.name %>.  Please follow the link below if you wish to accept this membership:
+You have been invited by <%= @membership.user.organization %> to join its member group.
+
+Your have been offered a <%= @membership.name %>
+
+To accept your membership plan, please click on the following link:
 
 <%= @request.protocol + @request.host_with_port + invite_path(:token => @creatable.token) %>
 
-The link will expire in 14 days, so make sure you sign up before then.
+This link expires in 7 days.
 
-Thank you,
+If you have any questions or concerns, please contact support at support@getmembr.com
 
-Team Membr
+Sincerely,
+<%= @membership.user.organization %>

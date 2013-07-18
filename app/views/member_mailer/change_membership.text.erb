@@ -1,1 +1,8 @@
-Membership Changed.
+Hi <%= @member.full_name %>,
+
+Your membership plan has been successfully changed from [old membership plan] to <%= @membership.name %>.
+
+If you have any questions or concerns, please contact support at support@getmembr.com
+
+Sincerely,
+<%= @membership.user.organization %>

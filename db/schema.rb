@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130716000846) do
+ActiveRecord::Schema.define(:version => 20130718095546) do
 
   create_table "admins", :force => true do |t|
     t.string   "email",               :default => "", :null => false
@@ -71,6 +71,9 @@ ActiveRecord::Schema.define(:version => 20130716000846) do
     t.boolean  "active",               :default => true,  :null => false
     t.datetime "plan_ending_date"
     t.boolean  "cancel_at_period_end", :default => false
+    t.string   "organization"
+    t.string   "title"
+    t.string   "work_number"
   end
 
   create_table "memberships", :force => true do |t|

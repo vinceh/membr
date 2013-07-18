@@ -5,7 +5,7 @@ class Member < ActiveRecord::Base
 
   validates_presence_of :membership_id, :email
   validates_presence_of :full_name, :street_address, :city, :state, :country, :zipcode, :phone, :if => "!developer"
-  attr_accessible :membership_id, :full_name, :email, :street_address, :city, :state, :country, :zipcode, :phone, :developer, :paid, :active, :plan_ending_date, :cancel_at_period_end
+  attr_accessible :membership_id, :full_name, :email, :street_address, :city, :state, :country, :zipcode, :phone, :developer, :paid, :active, :plan_ending_date, :cancel_at_period_end, :organization, :title, :work_number
 
   def to_json
     {

@@ -2,7 +2,7 @@
 
 var app = angular.module('membr', ['membr.services', 'membr.directives']);
 
-function AppCtrl($scope, $location, $http, Membership, Member, $q, $timeout) {
+function AppCtrl($scope, $location, $http, User, Membership, Member, $q, $timeout) {
   $http.defaults.headers.common ['X-CSRF-Token']=$('meta[name="csrf-token"]').attr('content');
 
   $scope.member_urls = Member.urls;
@@ -20,6 +20,10 @@ function AppCtrl($scope, $location, $http, Membership, Member, $q, $timeout) {
 
     Member.get_all_inactive().then(function(members) {
       $scope.inactiveMembers = members;
+    }),
+
+    User.accountStatus().then(function(status) {
+      $scope.accountStatus = status;
     })
   ];
 
@@ -61,8 +65,6 @@ function AppCtrl($scope, $location, $http, Membership, Member, $q, $timeout) {
     $scope.memberEdit.listIndex = index;
     $('.membership-edit').appendTo($('#membership'+index));
     $scope.memberEditOpen = true;
-
-    console.log('ha');
   }
 
   $scope.deleteMembership = function(membership) {
@@ -133,8 +135,6 @@ function AppCtrl($scope, $location, $http, Membership, Member, $q, $timeout) {
       $scope.loadingInvoices = false;
       $scope.invoices = data.invoices;
     });
-
-    console.log($scope.detailMember);
   }
 
   $scope.cancelMember = function(member) {
@@ -251,6 +251,15 @@ function AppCtrl($scope, $location, $http, Membership, Member, $q, $timeout) {
       $scope.memberEditOpen = false;
     });
   }
+
+  $scope.paidMembers = function() {
+    if ($scope.members.length > 10) {
+      return $scope.members.length - 10;
+    }
+    else {
+      return 0;
+    }
+  }
 }
 
 angular.module('membr.services', [], function ($provide) {
@@ -316,6 +325,20 @@ angular.module('membr.services', [], function ($provide) {
     return Invoice;
   });
 
+  $provide.factory('User', function ($http) {
+    var User = function (data) {
+      angular.extend(this, data);
+    }
+
+    User.accountStatus = function (page) {
+      return $http.get('api/user/account').then(function (response) {
+        return response.data;
+      })
+    }
+
+    return User;
+  });
+
   $provide.factory('Membership', function ($http) {
     var Membership = function (data) {
       this.name = null;
@@ -333,12 +356,6 @@ angular.module('membr.services', [], function ($provide) {
 
       return $http.post('api/memberships/create', {membership: membership}).then(function (response) {
         return new Membership(response.data.membership);
-      })
-    }
-
-    Membership.get = function (page) {
-      return $http.get('api/bg?page=' + page).then(function (response) {
-        return new Boardgame(response.data);
       })
     }
 
@@ -416,7 +433,6 @@ angular.module('membr.directives', []).
       restrict: 'A',
       link: function ($scope, $element, $attrs) {
         $element.click(function () {
-          console.log('popping', $attrs.popUp);
           window.open(encodeURI($attrs.popUp), 'mywindow', 'width=' + $attrs.width + ',height=' + $attrs.height);
         });
       }

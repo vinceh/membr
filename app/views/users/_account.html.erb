@@ -1,0 +1,28 @@
+<div class="inner panel account">
+  <div class="detail">
+    <div class="status-wrap">
+      <div class="status">
+        <div class="value">{{ members.length }}</div>
+        <div class="state">active members this month</div>
+      </div>
+      <div class="status green">
+        <div class="value">10</div>
+        <div class="state">free monthly  members</div>
+      </div>
+      <div class="status blue">
+        <div class="value">{{ paidMembers() }}</div>
+        <div class="state">paid members</div>
+      </div>
+      <div class="status long">
+        <div class="total">Total to be billed to your Credit Card on {{ accountStatus.next_bill_date }} @ $0.50/member</div>
+        <div class="amount">{{ accountStatus.next_bill_amount }}</div>
+      </div>
+      <div class="status long invoice">
+        <h2>Past Invoices</h2>
+        <div class="invoice-list">
+          <a href="invoices/{{ i.id }}" ng-repeat="i in accountStatus.invoices">{{ i.date_billed }} - {{ i.amount }}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

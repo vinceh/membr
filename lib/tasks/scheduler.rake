@@ -10,6 +10,14 @@ task :create_member => :environment do
   end
 end
 
+task :charge_user => :environment do
+  User.all.each do |u|
+    if u.requires_billing
+      u.bill
+    end
+  end
+end
+
 # TODO
 task :call_page => :environment do
   uri = URI.parse('http://membr.herokuapp.com/')

@@ -1,6 +1,6 @@
 Membr::Application.routes.draw do
 
-  devise_for :users do
+  devise_for :users, :controllers => { :registrations => "users/registrations" } do
     get 'home', :to => 'users#home', :as => :user_root
   end
 
@@ -28,6 +28,8 @@ Membr::Application.routes.draw do
   get 'member/:id/edit' => 'members#edit', :as => :edit_member
   put 'member/:id/edit' => 'members#edit', :as => :update_member
 
+  get 'invoices/:id' => 'users#invoice', :as => :invoice
+
   # Stripe Webhook
   post 'stripe-event' => 'events#stripe_event'
   get 'test-stripe' => 'events#test_stripe'
@@ -50,4 +52,7 @@ Membr::Application.routes.draw do
   get 'api/members/invoice/:id' => 'members#invoices_for'
   put 'api/members/cancel/:id' => 'members#cancel_member'
   post 'api/members/sendPaymenter' => 'members#send_paymenter'
+
+  # user
+  get 'api/user/account' => 'users#account_status'
 end

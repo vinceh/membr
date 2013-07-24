@@ -6,21 +6,29 @@
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
   <%= devise_error_messages! %>
 
-  <div><%= f.label :full_name %>
-    <%= f.text_field :full_name, :autofocus => true %></div>
+  <div class="multi">
+    <h3>Personal Information</h3>
+    <%= f.text_field :full_name, :autofocus => true, :placeholder => "Full Name" %>
+    <%= f.email_field :email, :placeholder => "Email"  %>
+  </div>
 
-  <div><%= f.label :organization %>
-    <%= f.text_field :organization %></div>
-
-  <div><%= f.label :email %>
-  <%= f.email_field :email, :autofocus => true %></div>
+  <div class="multi">
+    <h3>Business Information</h3>
+    <%= f.text_field :organization, :placeholder => "Business Name" %>
+    <%= f.text_field :street_address, :placeholder => "Street Address" %>
+    <%= f.text_field :city, :placeholder => "City" %>
+    <%= f.text_field :state, :placeholder => "State/Province" %>
+    <%= f.text_field :country, :placeholder => "Country" %>
+    <%= f.text_field :zipcode, :placeholder => "Zip/Postal Code" %>
+    <%= f.text_field :phone_number, :placeholder => "Phone Number" %>
+  </div>
 
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
     <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
   <% end %>
 
-  <div class="password">
-    <label>Enter your current password to change it</label>
+  <div class="password multi">
+    <h3>Enter your current password to change it</h3>
   <%= f.password_field :current_password, :placeholder => "• • • • • • • • • •" %>
   <%= f.password_field :password, :autocomplete => "off", :placeholder => "New password" %>
   <%= f.password_field :password_confirmation, :placeholder => "Re-enter password" %></div>

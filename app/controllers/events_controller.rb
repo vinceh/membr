@@ -21,14 +21,24 @@ class EventsController < ApplicationController
           member.paid_time = Time.at(event.data.object.date)
           member.save!
         when 'charge.succeeded'
-          invoice = Invoice.new
-          invoice.stripe_charge_id = event.data.object.id
-          invoice.amount = event.data.object.amount
-          invoice.stripe_fee = event.data.object.fee
-          invoice.member = Member.find_by_stripe_customer_id(event.data.object.customer)
-          invoice.save!
+          if Member.find_by_stripe_customer_id(event.data.object.customer)
+            invoice = Invoice.new
+            invoice.stripe_charge_id = event.data.object.id
+            invoice.amount = event.data.object.amount
+            invoice.stripe_fee = event.data.object.fee
+            invoice.member = Member.find_by_stripe_customer_id(event.data.object.customer)
+            invoice.save!
+          else
+            charge = Usercharge.new
+            charge.user = User.find_by_stripe_customer_id(event.data.object.customer)
+            charge.stripe_charge_id = event.data.object.id
+            charge.amount = event.data.object.amount
+            charge.stripe_fee = event.data.object.fee
+            charge.number_of_members = charge.amount/ENV['MONTHLY_MEMBER_FEE'].to_i
+            charge.save!
+          end
         when 'customer.updated'
-          if ( event.data.previous_attributes.subscription )
+          if event.data.previous_attributes.subscription
             member = Member.find_by_stripe_customer_id(event.data.object.id)
             member.active = false
             member.save!

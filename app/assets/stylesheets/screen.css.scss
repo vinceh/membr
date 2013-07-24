@@ -846,20 +846,21 @@ h3 {
       margin: 10px 0;
     }
   }
-  .stripe-button-el {
-    &:active {
-      padding: 0;
-      span {
-        border: 1px solid #008cdd;
-      }
-    }
-  }
   .which-member {
     margin-bottom: 10px;
   }
   .customSelect {
     background-color: white;
     width: 350px;
+  }
+}
+
+.stripe-button-el {
+  &:active {
+    padding: 0;
+    span {
+      border: 1px solid #008cdd;
+    }
   }
 }
 
@@ -959,7 +960,6 @@ h3 {
     }
   }
   .section {
-    margin-top: 100px;
     h2 {
       margin-bottom: 20px;
     }
@@ -971,11 +971,23 @@ h3 {
 
 .sing-up {
   margin-top: 100px;
-  margin-bottom: 100px;
+  margin-bottom: 250px;
   h2 {
     margin-bottom: 40px;
   }
   form {
+    h3 {
+      color: #666;
+    }
+    .create-stripe {
+      margin: 30px 0;
+      p {
+        margin-bottom: 10px;
+      }
+      h3 {
+        margin-bottom: 20px;
+      }
+    }
     input {
       margin: 0;
     }
@@ -985,6 +997,16 @@ h3 {
       margin-bottom: 10px;
       margin-top: 20px;
       @include font-light;
+    }
+    .multi {
+      h3 {
+        margin-bottom: 20px;
+        margin-top: 30px;
+      }
+      input {
+        display: block;
+        margin-bottom: 5px;
+      }
     }
     .password {
       input {
@@ -1197,6 +1219,169 @@ hr {
         span {
           @include inline-block;
           width: 75px;
+        }
+      }
+    }
+  }
+}
+
+.account {
+  .detail {
+    padding: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    .status {
+      width: 33.33333333333%;
+      height: 220px;
+      background-color: #e6e6e6;
+      text-align: center;
+      @include font-light;
+      float: left;
+      &.green {
+        background-color: $success;
+        color: white;
+        .value {
+          color: white;
+          @include text-shadow(0 1px 0 #aaa);
+        }
+        .state {
+          color: white;
+          @include text-shadow(0 1px 0 #aaa);
+        }
+      }
+      &.long {
+        width: 100%;
+        height: 120px;
+        display: block;
+        background-color: white;
+        @include box-sizing(border-box);
+        border-right: 1px solid #ddd;
+        .total {
+          float: left;
+          margin: 70px 0 0 30px;
+        }
+        .amount {
+          float: right;
+          font-size: 70px;
+          color: #444;
+          @include text-shadow(0 1px 0 white);
+          margin: 30px;
+        }
+      }
+      &.invoice {
+        height: auto;
+        background-color: white;
+        @include box-sizing(border-box);
+        border: 1px solid #ddd;
+        border-top: 1px dashed #e6e6e6;
+        position: relative;
+        min-height: 85px;
+        text-align: left;
+        .invoice-list {
+          margin: 30px;
+          a {
+            display: block;
+            margin-bottom: 10px;
+          }
+        }
+        h2 {
+          position: absolute;
+          right: 30px;
+          top: 30px;
+          color: #888;
+        }
+      }
+      &.blue {
+        background-color: $p;
+        color: white;
+        .value {
+          color: white;
+          @include text-shadow(0 1px 0 #aaa);
+        }
+        .state {
+          color: white;
+          @include text-shadow(0 1px 0 #aaa);
+        }
+      }
+      .value {
+        padding-top: 60px;
+        font-size: 70px;
+        @include text-shadow(0 1px 0 white);
+        margin-bottom: 10px;
+        color: #444;
+      }
+      .state {
+        color: #999;
+        line-height: 1.4em;
+        @include text-shadow(0 1px 0 white);
+      }
+    }
+  }
+}
+
+.invoice-wrap {
+  border-top: 5px solid $p;
+  font-size: 15px;
+  @include text-shadow(0 1px 0 white);
+  .container {
+    padding: 80px 0;
+  }
+  .top-bill {
+    @include font-light;
+    margin-top: 50px;
+    overflow: hidden;
+    .to {
+      float: left;
+      h3 {
+        margin-bottom: 15px;
+        color: #666;
+      }
+      p {
+        line-height: 1.3em;
+      }
+    }
+    .invoice-number {
+      float: right;
+      text-align: right;
+      color: #999;
+      span {
+        font-size: 25px;
+        font-weight: bold;
+        color: #333;
+        @include inline-block;
+        margin-top: 10px;
+      }
+    }
+  }
+  .summary {
+    margin-top: 50px;
+    h3 {
+      color: #bbb;
+      border-bottom: 2px solid #bbb;
+      padding: 10px;
+      margin-bottom: 10px;
+      span {
+        float: right;
+      }
+    }
+    li {
+      @include font-semibold;
+      color: #444;
+      list-style: none;
+      padding: 10px 10px;
+      span {
+        float: right;
+      }
+      &.total {
+        border-top: 2px solid #bbb;
+        margin-top: 10px;
+        padding-top: 20px;
+        text-align: right;
+        font-size: 25px;
+        color: #bbb;
+        span {
+          color: #444;
+          margin-left: 15px;
         }
       }
     }

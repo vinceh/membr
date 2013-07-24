@@ -1,0 +1,24 @@
+<div class="invoice-wrap">
+  <div class="container">
+    <h1><%= image_tag 'logo.png' %></h1>
+    <div class="top-bill">
+      <div class="to">
+        <h3>Billed To</h3>
+        <p>
+          <%= @invoice.user.full_name %>  <br/>
+          <%= @invoice.user.address_text %>
+        </p>
+      </div>
+      <div class="invoice-number">
+        Invoice # <br/>
+        <span><%= sprintf("%07d", @invoice.id) %></span>
+      </div>
+    </div>
+    <div class="summary">
+      <h3>Summary<span><%= @invoice.created_at.strftime("%b %d, %Y") %></span></h3>
+      <li>Number of paid members <span><%= @invoice.number_of_members %></span></li>
+      <li>Fee per paid member <span><%= sprintf("$%.2f", ENV['MONTHLY_MEMBER_FEE'].to_f/100) %></span></li>
+      <li class="total">Total: <span><%= sprintf("$%.2f", @invoice.amount.to_f/100) %></span></li>
+    </div>
+  </div>
+</div>

@@ -13,6 +13,12 @@ en:
       user:
         tos: ""
         email: "Email"
+        full_name: "Full Name"
+        organization: "Organization Name"
+        zipcode: "Zip/Postal Code"
+        street_address: "Street Address"
+        state: "Province/State"
+        phone_number: "Phone Number"
     errors:
       template:
         header:
@@ -26,4 +32,5 @@ en:
               accepted: "You must accept our 'terms of service' to create an account"
             email:
               taken: "is already associated with an account"
+
 

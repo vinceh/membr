@@ -29,6 +29,7 @@ Membr::Application.routes.draw do
   put 'member/:id/edit' => 'members#edit', :as => :update_member
 
   get 'invoices/:id' => 'users#invoice', :as => :invoice
+  get 'transactions/members' => 'users#member_invoice', :as => :members_transactions
 
   # Stripe Webhook
   post 'stripe-event' => 'events#stripe_event'

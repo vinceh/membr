@@ -14,6 +14,7 @@ gem 'angularjs-rails'
 gem "dynamic_form"
 gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
 gem 'roo'
+gem 'will_paginate', '~> 3.0'
 
 group :development do
   gem "better_errors"

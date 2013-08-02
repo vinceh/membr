@@ -29,6 +29,10 @@ class User < ActiveRecord::Base
     usercharges.where(:id => id).first
   end
 
+  def all_invoices
+    Invoice.joins(member: [membership: :user]).where(users: {id: id}).order("created_at DESC")
+  end
+
   def add_stripe(token)
     begin
       customer = Stripe::Customer.create(
@@ -86,7 +90,6 @@ class User < ActiveRecord::Base
 
   def address_text
     "#{self.street_address} #{self.city} #{self.state}, #{self.zipcode}"
-
   end
 
   private

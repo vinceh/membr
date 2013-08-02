@@ -24,6 +24,12 @@ function AppCtrl($scope, $location, $http, User, Membership, Member, $q, $timeou
 
     User.accountStatus().then(function(status) {
       $scope.accountStatus = status;
+    }),
+
+    User.invoices(1).then(function(data) {
+      $scope.transactions = data.invoices;
+      $scope.transactions_page = 1;
+      $scope.total_transactions_page = data.total_pages
     })
   ];
 
@@ -43,6 +49,17 @@ function AppCtrl($scope, $location, $http, User, Membership, Member, $q, $timeou
   });
 
   $scope.membership = new Membership();
+
+  $scope.getMoreInvoices = function() {
+    if ($scope.transactions_page < $scope.total_transactions_page && !$scope.getting_transactions) {
+      $scope.transactions_page = $scope.transactions_page + 1;
+      $scope.getting_transactions = true;
+      User.invoices($scope.transactions_page).then(function(data) {
+        $scope.transactions = $scope.transactions.concat(data.invoices);
+        $scope.getting_transactions = false;
+      })
+    }
+  };
 
   $scope.showScope = function() {
     console.log($scope);
@@ -192,15 +209,17 @@ function AppCtrl($scope, $location, $http, User, Membership, Member, $q, $timeou
 
   $scope.invoiceHelpers = {
     startingText: function(invoice) {
-      var membership = invoice.lines.data[0].plan.name;
-      var attempts = invoice.attempt_count;
-      if ( attempts > 0 ) {
-        var attemptText = '(' + attempts + ' attempt' + (attempts > 0 && 's' || '') + ')';
+      if (invoice) {
+        var membership = invoice.lines.data[0].plan.name;
+        var attempts = invoice.attempt_count;
+        if ( attempts > 0 ) {
+          var attemptText = '(' + attempts + ' attempt' + (attempts > 0 && 's' || '') + ')';
+        }
+        else {
+          var attemptText = "";
+        }
+        return '$' + (invoice.total/100).toFixed(2) + ' for ' + membership + ' ' + attemptText;
       }
-      else {
-        var attemptText = "";
-      }
-      return '$' + (invoice.total/100).toFixed(2) + ' for ' + membership + ' ' + attemptText;
     },
     paid: function(invoice) {
       return invoice.paid && 'Paid' || 'Not Paid';
@@ -253,7 +272,7 @@ function AppCtrl($scope, $location, $http, User, Membership, Member, $q, $timeou
   }
 
   $scope.paidMembers = function() {
-    if ($scope.members.length > 10) {
+    if ($scope.members && $scope.members.length > 10) {
       return $scope.members.length - 10;
     }
     else {
@@ -330,8 +349,14 @@ angular.module('membr.services', [], function ($provide) {
       angular.extend(this, data);
     }
 
-    User.accountStatus = function (page) {
+    User.accountStatus = function () {
       return $http.get('api/user/account').then(function (response) {
+        return response.data;
+      })
+    }
+
+    User.invoices = function(page) {
+      return $http.get('transactions/members?page=' + page).then(function (response) {
         return response.data;
       })
     }
@@ -435,30 +460,6 @@ angular.module('membr.directives', []).
         $element.click(function () {
           window.open(encodeURI($attrs.popUp), 'mywindow', 'width=' + $attrs.width + ',height=' + $attrs.height);
         });
-      }
-    }
-  }).
-  directive('scrolly',function () {
-    return {
-      restrict: "A",
-      scope: {
-        scrolly: '&'
-      },
-      link: function (scope, element, attrs) {
-
-        $(window).scroll(function () {
-          if (distanceToBottom() <= 500) {
-            scope.scrolly();
-          }
-        });
-
-        function distanceToBottom() {
-          var scrollPosition = window.pageYOffset;
-          var windowSize = window.innerHeight;
-          var bodyHeight = document.body.offsetHeight;
-
-          return Math.max(bodyHeight - (scrollPosition + windowSize), 0);
-        }
       }
     }
   }).

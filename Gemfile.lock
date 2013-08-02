@@ -167,6 +167,7 @@ GEM
     uuidtools (2.1.2)
     warden (1.2.1)
       rack (>= 1.0)
+    will_paginate (3.0.2)
     xml-simple (1.1.1)
 
 PLATFORMS
@@ -188,5 +189,7 @@ DEPENDENCIES
   rails (= 3.2.13)
   roo
   sass-rails (~> 3.2.3)
+  spreadsheet
   stripe!
   uglifier (>= 1.0.3)
+  will_paginate (~> 3.0)

@@ -1387,3 +1387,25 @@ hr {
     }
   }
 }
+
+.transactions {
+  .load-transactions {
+    width: 300px;
+    padding: 10px;
+    @include font-light;
+    border: 1px solid #ddd;
+    margin: 0 auto;
+    margin-top: 30px;
+    text-align: center;
+    &:hover {
+      background-color: #eee;
+      cursor: pointer;
+    }
+    img {
+      height: 14px;
+      margin-left: 5px;
+      position: relative;
+      top: 2px;
+    }
+  }
+}

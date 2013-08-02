@@ -27,4 +27,18 @@ class UsersController < ApplicationController
       invoices: invoices
     }
   end
+
+  def member_invoice
+    invoices = current_user.all_invoices.paginate(:page => params[:page], :per_page => 50)
+
+    returnee = []
+    invoices.each do |i|
+      returnee << i.to_json
+    end
+
+    render :json => {
+      invoices: returnee,
+      total_pages: invoices.total_pages
+    }
+  end
 end

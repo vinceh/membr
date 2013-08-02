@@ -26,4 +26,15 @@ class Invoice < ActiveRecord::Base
 
     false
   end
+
+  def to_json
+    {
+      amount: sprintf("$%.2f", amount.to_f/100),
+      stripe_fee: sprintf("$%.2f", stripe_fee.to_f/100),
+      amount_receivable: sprintf("$%.2f", (amount-stripe_fee).to_f/100),
+      member: member.full_name,
+      membership: member.membership.name,
+      date_received: created_at.strftime("%b %d, %Y")
+    }
+  end
 end

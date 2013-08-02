@@ -1,0 +1,28 @@
+<div class="inner panel transactions">
+  <div class="detail">
+    <h2>Member Transactions</h2>
+
+    <table>
+      <tr>
+        <th>Member</th>
+        <th>Membership</th>
+        <th>Amount Charged</th>
+        <th>Stripe Fee</th>
+        <th>Amount Receivable</th>
+        <th>Date Invoiced</th>
+      </tr>
+      <tr ng-repeat="i in transactions">
+        <td>{{ i.member }}</td>
+        <td>{{ i.membership }}</td>
+        <td>{{ i.amount }}</td>
+        <td>{{ i.stripe_fee }}</td>
+        <td>{{ i.amount_receivable }}</td>
+        <td>{{ i.date_received }}</td>
+      </tr>
+    </table>
+
+    <div class="load-transactions" ng-show="transactions_page < total_transactions_page" ng-click="getMoreInvoices()">
+      Load more transactions <%= image_tag "ajax-loader.gif", "ng-show" => "getting_transactions" %>
+    </div>
+  </div>
+</div>

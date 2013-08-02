@@ -41,7 +41,7 @@ $success: #71dd51;
   top: 0;
 }
 
-@mixin wash($color, $opacity:0.9) {
+@mixin wash($color, $opacity:0.95) {
   @include full-page;
   background-color: $color;
   opacity: $opacity;
@@ -592,7 +592,7 @@ h3 {
   z-index: 999;
   text-align: center;
   .wash {
-    @include wash(white, 0.98);
+    @include wash(white);
   }
   .details {
     position: relative;
@@ -619,7 +619,7 @@ h3 {
     min-height: 400px;
   }
   .wash {
-    @include wash(white, 0.98);
+    @include wash(white);
   }
   h2 {
     margin-left: 20px;
@@ -733,7 +733,7 @@ h3 {
 .invite {
   @include full-page;
   .wash {
-    @include wash(white, 0.98);
+    @include wash(white);
   }
   &>div {
     position: relative;

@@ -37,12 +37,10 @@ class EventsController < ApplicationController
             charge.number_of_members = charge.amount/ENV['MONTHLY_MEMBER_FEE'].to_i
             charge.save!
           end
-        when 'customer.updated'
-          if event.data.previous_attributes.subscription
-            member = Member.find_by_stripe_customer_id(event.data.object.id)
-            member.active = false
-            member.save!
-          end
+        when 'customer.subscription.deleted'
+          member = Member.find_by_stripe_customer_id(event.data.object.customer)
+          member.active = false
+          member.save!
       end
     end
 

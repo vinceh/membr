@@ -24,16 +24,8 @@
 
     <div class="tos"><%= f.check_box :tos %> <%= f.label :tos, "I agree to the terms of service" %> </div>
 
-    <div class="create-stripe">
-      <h3>Credit Card Information</h3>
-      <p>A Membr account requires a Credit Card.  You will not be charged for creating an account and we will only bill you if you have more than 10 paying members.  Please refer to our detailed payment plans for further information.</p>
-      <script src="https://checkout.stripe.com/v2/checkout.js" class="stripe-button"
-              data-key="<%= ENV['PUBLISHABLE_KEY']%>"
-              data-name="Membr"
-              data-panel-label="Create Account"
-              data-label="Add Credit Card"
-      ></script>
-      <%= image_tag "outline.png", :class => "stripe" %>
+    <div class="submit">
+      <%= f.submit "Sign up", :class => "btn" %>
     </div>
   <% end %>
 

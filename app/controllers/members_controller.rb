@@ -6,7 +6,7 @@ class MembersController < ApplicationController
   def invitation
     @creatable = Creatable.find_by_token(params[:token])
 
-    if !@creatable || (Time.now - @creatable.created_at) > 7.days
+    if !@creatable || (Time.now - @creatable.created_at) > 7.days || @creatable.membership.archived
       render_error({
          :message => "This invitation is either invalid or has expired.  Contact the owner of the membership to request another invitation.",
          :route => root_url
@@ -58,25 +58,25 @@ class MembersController < ApplicationController
     @user = User.find(params[:id])
     @member = Member.new
 
-      if request.post?
-        membership = Membership.find(params[:membership])
+    if request.post?
+      membership = Membership.find(params[:membership])
 
-        if membership
-          @member = Member.new(params[:member])
-          @member.developer = false
-          @member.membership = membership
+      if membership
+        @member = Member.new(params[:member])
+        @member.developer = false
+        @member.membership = membership
 
-          if @member.valid? && @member.join_membership(membership, params[:stripeToken])
+        if @member.valid? && @member.join_membership(membership, params[:stripeToken])
 
-            render_success({
-                             :message => "You have successfully joined a membership.  Contact the membership owner if you have any questions.",
-                             :route => root_url
-                           })
-          else
-            flash[:error] = e.message
-            redirect_to charges_path
-          end
+          render_success({
+                           :message => "You have successfully joined a membership.  Contact the membership owner if you have any questions.",
+                           :route => root_url
+                         })
+        else
+          flash[:error] = e.message
+          redirect_to charges_path
         end
+      end
     end
   end
 

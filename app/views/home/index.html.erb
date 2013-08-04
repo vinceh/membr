@@ -1,3 +1,100 @@
-<div class="container">
-  <h1>Members :D</h1>
+<div class="main-header">
+  <div class="container static-cont">
+    <%= image_tag "logo.png" %>
+    <div class="links">
+      <a class="invite-link">Request an Invite</a>
+      <%= link_to "Beta Login", new_user_session_path %>
+    </div>
+  </div>
 </div>
+
+<div class="hero">
+  <div class="container static-cont">
+    <h1>Hassel-free Membership<br/>Management Solution</h1>
+    <div>
+      <button class="btn invite-link">TRY MEMBR</button> <span>free</span>
+    </div>
+  </div>
+</div>
+
+<div class="container static-cont section onboard">
+  <h2>Onboard New Members in 10 Seconds</h2>
+  <p>No member accounts. Your members only need a credit card to be onboarded.</p>
+</div>
+
+<hr/>
+
+<div class="container static-cont section values">
+  <h2>NEVER HAVE TO COLLECT OVERDUES</h2>
+  <p>Automated billing so you always collect your membership fees on time.</p>
+  <div class="points">
+    <div class="point">
+      <div class="inner">
+        <div class="avatar">
+          <%= image_tag "cloud-security.png" %>
+        </div>
+        <h2>SECURED PAYMENTS</h2>
+        <p>Every transaction and payment is secured in the cloud.
+          Membr does not store any credit card information.
+          A true peace of mind for everyone.</p>
+      </div>
+    </div>
+    <div class="point">
+      <div class="inner">
+        <div class="avatar">
+          <%= image_tag "automatedrenewal.png" %>
+        </div>
+        <h2>AUTOMATED RENEWALS</h2>
+        <p>Membr is smart enough to know that membership
+          fees are due. It’s easy to set up recurring payment
+          and you will never have to collect overdues again.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr/>
+
+<div class="container static-cont section bottom-convert">
+  <h2>HASSLE-FREE SETUP</h2>
+  <p>Making the switch is as easy as importing all your member information with one click.</p>
+  <button class="btn invite-link">TRY MEMBR</button>
+</div>
+
+<div class="main-footer">
+  <div class="container static-cont">
+    <a>ABOUT</a>
+    <a>TERMS</a>
+    <a>FAQ</a>
+  </div>
+</div>
+
+<div class="full-pager beta-form-wrap">
+  <div class="wash"></div>
+  <div class="form-wrap">
+    <form>
+      <h2>Request Beta</h2>
+      <p>Request access to the private beta by completing the form below.</p>
+      <input type="text" placeholder="Name and stuff">
+      <input type="text" placeholder="Name and stuff">
+      <input type="text" placeholder="Name and stuff">
+      <input type="text" placeholder="Name and stuff">
+      <input type="text" placeholder="Name and stuff">
+      <input type="text" placeholder="Name and stuff">
+      <input type="text" placeholder="Name and stuff">
+      <input type="submit" class="btn" value="Request Invite"></button>
+    </form>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $('.invite-link').click(function() {
+    $('.beta-form-wrap').fadeIn();
+    $('.form-wrap').css('top', '50%');
+  });
+
+  $('.beta-form-wrap .wash').click(function() {
+    $('.form-wrap').css('top', '-100%');
+    $('.beta-form-wrap').fadeOut();
+  });
+</script>

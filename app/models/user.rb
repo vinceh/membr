@@ -88,6 +88,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def active_memberships
+    memberships.where(archived: false)
+  end
+
   def address_text
     "#{self.street_address} #{self.city} #{self.state}, #{self.zipcode}"
   end

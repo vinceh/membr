@@ -20,7 +20,35 @@
 <div class="container static-cont section onboard">
   <h2>Onboard New Members in 10 Seconds</h2>
   <p>No member accounts. Your members only need a credit card to be onboarded.</p>
+  <div id="slider">
+    <ul class="pager">
+      <div>
+        <li><a rel="0" class="pagenum" href="#">Create plans</a></li>
+        <li><a rel="1" class="pagenum" href="#">Invite</a></li>
+        <li><a rel="2" class="pagenum" href="#">Onboard</a></li>
+      </div>
+    </ul>
+    <div class="viewport">
+      <ul class="overview">
+        <li><%= image_tag "createplan.png" %></li>
+        <li><%= image_tag "dashboard.png" %></li>
+        <li><%= image_tag "signup.png" %></li>
+      </ul>
+    </div>
+  </div>
 </div>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('#slider').tinycarousel({
+      intervaltime: 5000,
+      controls: false,
+      pager: true,
+      duration: 500,
+      interval: true
+    });
+  });
+</script>
 
 <hr/>
 

@@ -77,6 +77,21 @@ label {
   @include font-light;
 }
 
+#slider { width: 960px; overflow:hidden; @include font-light; margin-top: 40px; }
+#slider .viewport { float: left; width: 960px; height: 467px; overflow: hidden; position: relative; margin-top: 30px; }
+#slider .buttons { display: block; margin: 30px 10px 0 0; float: left; }
+#slider .next { margin: 30px 0 0 10px;  }
+#slider .disable { visibility: hidden; }
+#slider .overview { list-style: none; padding: 0; margin: 0;  position: absolute; left: 0; top: 0; }
+#slider .overview li{ float: left; margin: 0 20px 0 0; padding: 1px; width: 960px;}
+#slider .overview li img {width: 100%;}
+#slider .pager { overflow:hidden; list-style: none; clear: both; margin: 0 auto; text-align: center; }
+#slider .pager div { display: table; margin: 0 auto; }
+#slider .pager li { float: left; width: 175px; margin-right: 5px;}
+#slider .pager li a { font-size: 16px; padding: 15px 0; background-color: #ccc;  color: white; }
+#slider .pagenum { text-decoration: none; text-align: center; display: block; }
+#slider .pager li a.active { background-color: $p; }
+
 input[type="text"], input[type="number"], input[type="email"], .customSelect, select, input[type="password"] {
   outline: none;
   padding: 9px 11px;

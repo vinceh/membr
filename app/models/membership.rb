@@ -8,7 +8,7 @@ class Membership < ActiveRecord::Base
   validates_inclusion_of :is_private, :in => [true, false]
   attr_accessible :user_id, :name, :is_private, :fee, :renewal_period
 
-  validates :fee, :numericality => { :greater_than_or_equal_to   => 0 }
+  validates :fee, :numericality => { :greater_than_or_equal_to => 500 }
 
   validates_each :renewal_period do |record, attr, value|
     valid = false

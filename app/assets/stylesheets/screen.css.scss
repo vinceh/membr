@@ -1295,6 +1295,15 @@ hr {
 /* admin */
 .admin {
   margin-top: 100px;
+  p {
+    margin-bottom: 30px;
+  }
+  &.betas {
+    width: 1000px;
+    table {
+      margin-top: 30px;
+    }
+  }
   h2:first-child {
     position: relative;
     margin-bottom: 40px;

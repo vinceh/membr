@@ -1,0 +1,28 @@
+<div class="container admin betas">
+  <h2>Beta Signups :D</h2>
+  <p>
+    <%= link_to "Back to controlpanel", admin_root_path %>
+  </p>
+  <table>
+    <tr>
+      <th>Full Name</th>
+      <th>Email</th>
+      <th>Phone Number</th>
+      <th>Organization</th>
+      <th>Job Title</th>
+      <th># of Members</th>
+      <th>Location</th>
+    </tr>
+    <% @betas.each do |b| %>
+      <tr>
+        <td><%= b.full_name %></td>
+        <td><%= b.email %></td>
+        <td><%= b.phone_number %></td>
+        <td><%= b.organization %></td>
+        <td><%= b.job_title %></td>
+        <td><%= b.number_of_members %></td>
+        <td><%= b.location %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>

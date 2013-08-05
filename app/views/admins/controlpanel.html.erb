@@ -1,5 +1,10 @@
 <div class="container admin">
   <h2><%= @users.length %> members OMG :D</h2>
+
+  <p>
+    <%= link_to "Beta Accounts", admin_beta_accounts_path %>
+  </p>
+
   <% @users.each do |u| %>
     <%= link_to admin_user_detail_path(u.id), class: 'user' do %>
       [

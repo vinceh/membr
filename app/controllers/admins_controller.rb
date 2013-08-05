@@ -31,4 +31,8 @@ class AdminsController < ApplicationController
 
     redirect_to :action => :user_detail, :id => params[:id]
   end
+
+  def beta_accounts
+    @betas = Beta.all
+  end
 end

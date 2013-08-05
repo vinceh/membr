@@ -7,15 +7,28 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :full_name, :organization, :tos,
-                  :street_address, :city, :state, :country, :zipcode, :phone_number, :stripe_customer_id
+                  :street_address, :city, :state, :country, :zipcode, :phone_number, :stripe_customer_id, :currency
   # attr_accessible :title, :body
 
-  validates_presence_of :full_name, :organization, :street_address, :city, :state, :country, :zipcode, :phone_number
+  validates_presence_of :full_name, :organization, :street_address, :city, :state, :country, :zipcode, :phone_number, :currency
   validates :tos, :acceptance => true, :on => :create
 
   has_many :memberships
   has_many :usercharges
   has_many :members, :through => :memberships
+
+  def self.currencies
+    [
+      {
+        currency: 'cad',
+        display: 'Canadian Dollar (CAD)'
+      },
+      {
+        currency: 'usd',
+        display: 'United States Dollar (USD)'
+      }
+    ]
+  end
 
   def member(id)
     members.where(:id => id).first

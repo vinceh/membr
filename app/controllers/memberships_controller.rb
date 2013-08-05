@@ -14,7 +14,7 @@ class MembershipsController < ApplicationController
         :interval => m.get_interval,
         :interval_count => m.get_interval_count,
         :name => m.name,
-        :currency => 'cad',
+        :currency => current_user.currency,
         :id => m.id
       )
       render :json => success(m.to_json)

@@ -2,7 +2,11 @@
   <div class="detail">
     <h2>Member Transactions</h2>
 
-    <table>
+    <p ng-show="transactions.length == 0">
+      No transactions yet.  Invite someone to join your membership and their Transactions will appear here.
+    </p>
+
+    <table ng-show="transactions.length > 0">
       <tr>
         <th>Member</th>
         <th>Membership</th>

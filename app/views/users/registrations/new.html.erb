@@ -13,6 +13,7 @@
 
     <div class="multi">
       <h3>Business Information</h3>
+      <%= f.select :currency, options_for_select(User.currencies.map { |c| [c[:display], c[:currency]]}) %>
       <%= f.text_field :organization, :placeholder => "Business Name" %>
       <%= f.text_field :street_address, :placeholder => "Street Address" %>
       <%= f.text_field :city, :placeholder => "City" %>
@@ -31,3 +32,7 @@
 
   <%= render "users/shared/links" %>
 </div>
+
+<script type="text/javascript">
+  $("#user_currency").customSelect();
+</script>

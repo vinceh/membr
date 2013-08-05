@@ -772,7 +772,7 @@ h3 {
       p {
         margin-bottom: 20px;
       }
-      input[type="text"] {
+      input[type="text"], input[type="number"] {
         @include box-sizing(border-box);
         width: 100%;
         display: block;

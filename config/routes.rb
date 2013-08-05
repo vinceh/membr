@@ -31,6 +31,8 @@ Membr::Application.routes.draw do
   get 'invoices/:id' => 'users#invoice', :as => :invoice
   get 'transactions/members' => 'users#member_invoice', :as => :members_transactions
 
+  post 'beta/create' => 'home#create_beta', :as => :create_beta
+
   # Stripe Webhook
   post 'stripe-event' => 'events#stripe_event'
   get 'test-stripe' => 'events#test_stripe'

@@ -1574,3 +1574,25 @@ hr {
     }
   }
 }
+
+.terms {
+  margin: 100px auto;
+  h2 {
+    margin: 40px 0;
+  }
+  h3 {
+    margin: 20px 0;
+  }
+
+  ul {
+
+    li {
+      font-size: 16px;
+      line-height: 1.7em;
+      color: #999;
+      @include font-light;
+      margin: 10px 0 10px 15px;
+      list-style: disc;
+    }
+  }
+}

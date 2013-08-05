@@ -16,6 +16,8 @@ Membr::Application.routes.draw do
 
   get 'success' => 'home#success', :as => :success
   get 'error' => 'home#error', :as => :error
+  get 'terms' => 'home#terms', :as => :terms
+  get 'faq' => 'home#faq', :as => :faq
 
   get 'invitation/:token' => 'members#invitation', :as => :invite
   post 'invitation/:token' => 'members#invitation', :as => :members_create

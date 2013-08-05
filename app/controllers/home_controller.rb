@@ -3,6 +3,20 @@ class HomeController < ApplicationController
 
   def index
     @beta = Beta.new
+
+    render :layout => "static"
+  end
+
+  def terms
+    render :layout => "static"
+  end
+
+  def faq
+    render :layout => "static"
+  end
+
+  def about
+    render :layout => "static"
   end
 
   def create_beta

@@ -2,7 +2,6 @@ Membr::Application.routes.draw do
 
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" } do
     get 'home', :to => 'users#home', :as => :user_root
-    get 'users/stripe-event', :to => 'users#stripe_event'
   end
 
   devise_for :admins, :skip => [:registration] do

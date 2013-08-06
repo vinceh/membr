@@ -136,6 +136,7 @@ class Member < ActiveRecord::Base
 
   def join_membership(membership, token)
     begin
+      Stripe.api_key = membership.user.stripe_token
       customer = Stripe::Customer.create(
         :card  => token,
         :plan => membership.id

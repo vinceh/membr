@@ -25,7 +25,6 @@ class MembersController < ApplicationController
         @member.membership = membership
 
         if @member.valid? && @member.join_membership(membership, params[:stripeToken])
-
           creatable.destroy
           render_success({
              :message => "You have successfully joined a membership.  Contact the membership owner if you have any questions.",

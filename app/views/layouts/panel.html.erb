@@ -32,7 +32,7 @@
     {{ successMessage }}
   </div>
   <div class="right-links">
-
+    <%= link_to "Logout", user_signout_path, :method => "DELETE" %>
   </div>
 </div>
 
@@ -58,6 +58,10 @@
       <div class="nav-item" data-panel="transactions">
         <%= image_tag 'transactions.png' %>
         Transactions
+      </div>
+      <div class="nav-item" data-panel="settings">
+        <%= image_tag 'settings.png' %>
+        Account Settings
       </div>
     </div>
   <div class="content">

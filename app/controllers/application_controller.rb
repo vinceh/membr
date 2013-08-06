@@ -9,6 +9,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def after_sign_out_path_for(resource)
+    root_url
+  end
+
   def not_found
     raise ActionController::RoutingError.new('Not Found')
   end

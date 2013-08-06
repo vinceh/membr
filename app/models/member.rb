@@ -83,6 +83,7 @@ class Member < ActiveRecord::Base
 
   def cancel_subscription
     begin
+      Stripe.api_key = membership.user.stripe_token
       cu = Stripe::Customer.retrieve(stripe_customer_id)
       res = cu.cancel_subscription(:at_period_end => true)
       if res.cancel_at_period_end
@@ -101,6 +102,7 @@ class Member < ActiveRecord::Base
   def change_subscription(membership)
     if (self.active && !self.cancel_at_period_end && membership.id != self.membership_id) || !self.active || self.cancel_at_period_end
       begin
+        Stripe.api_key = membership.user.stripe_token
         cu = Stripe::Customer.retrieve(stripe_customer_id)
         res = cu.update_subscription(:plan => membership.id, :prorate => false)
         if res.status == "active"

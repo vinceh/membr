@@ -113,6 +113,7 @@ class Membership < ActiveRecord::Base
   def stripe_delete
     self.archived = true
     save!
+    Stripe.api_key = self.user.stripe_token
     plan = Stripe::Plan.retrieve(id.to_s)
     plan.delete
 

@@ -2,7 +2,7 @@ Hi <%= @member.full_name %>,
 
 Your payment information has successfully been updated to a new credit card.
 
-If you have any questions or concerns, please contact support at support@getmembr.com
+If you have any questions or concerns, please contact your admin at <%= @membership.user.email %>
 
 Sincerely,
 <%= @member.membership.user.organization %>

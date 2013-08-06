@@ -35,6 +35,8 @@ class MemberMailer < ActionMailer::Base
   def paymenter(paymenter, request)
     @paymenter = paymenter
     @request = request
+    @member = paymenter.member
+    @membership = paymenter.member.membership
     mail(:to => @paymenter.member.email, :subject => "Please update your payment details")
   end
 

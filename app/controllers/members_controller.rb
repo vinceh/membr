@@ -131,6 +131,7 @@ class MembersController < ApplicationController
   def invoices_for
     member = current_user.member(params[:id])
 
+    Stripe.api_key = current_user.stripe_token
     event = Stripe::Invoice.all(
       :customer => member.stripe_customer_id,
       :count => 5

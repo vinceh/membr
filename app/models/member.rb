@@ -122,6 +122,7 @@ class Member < ActiveRecord::Base
 
   def update_payment(token)
     begin
+      Stripe.api_key = membership.user.stripe_token
       cu = Stripe::Customer.retrieve(stripe_customer_id)
       cu.card = token
       cu.save
@@ -139,7 +140,8 @@ class Member < ActiveRecord::Base
       Stripe.api_key = membership.user.stripe_token
       customer = Stripe::Customer.create(
         :card  => token,
-        :plan => membership.id
+        :plan => membership.id,
+        :email => email
       )
 
       self.stripe_customer_id = customer.id

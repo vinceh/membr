@@ -1,21 +1,44 @@
 class User < ActiveRecord::Base
-  # Include default devise modules. Others available are:
-  # :token_authenticatable, :confirmable,
-  # :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable, :lockable
 
-  # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :full_name, :organization, :tos,
-                  :street_address, :city, :state, :country, :zipcode, :phone_number, :stripe_customer_id, :currency
-  # attr_accessible :title, :body
+  devise :omniauthable, :rememberable, :trackable
 
-  validates_presence_of :full_name, :organization, :street_address, :city, :state, :country, :zipcode, :phone_number, :currency
-  validates :tos, :acceptance => true, :on => :create
+  attr_accessible :email, :remember_me, :organization,
+                  :country, :currency, :stripe_account_id, :stripe_public_key, :stripe_token, :charge_enabled
+
+  validates_presence_of :email, :country, :currency, :stripe_account_id, :stripe_public_key, :stripe_token, :charge_enabled, :organization
 
   has_many :memberships
   has_many :usercharges
   has_many :members, :through => :memberships
+
+  def self.from_omniauth(obj)
+
+    user = where(:stripe_account_id => obj["uid"]).first
+
+    if user && !user.charge_enabled && acc["charge_enabled"]
+      user.stripe_public_key = obj["info"]["stripe_publishable_key"]
+      user.stripe_token = obj["credentials"]["token"]
+      user.charge_enabled = acc["charge_enabled"]
+      user.save!
+    elsif !user
+      Stripe.api_key = obj["credentials"]["token"]
+      acc = Stripe::Account.retrieve()
+
+      user = self.new
+      user.email = acc["email"]
+      user.organization = acc["statement_descriptor"]
+      user.country = acc["country"]
+      user.currency = acc["default_currency"]
+      user.stripe_account_id = acc["id"]
+      user.stripe_public_key = obj["info"]["stripe_publishable_key"]
+      user.stripe_token = obj["credentials"]["token"]
+      user.organization = acc["statement_descriptor"]
+      user.charge_enabled = acc["charge_enabled"]
+      user.save!
+    end
+
+    user
+  end
 
   def self.currencies
     [

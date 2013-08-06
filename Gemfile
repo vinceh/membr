@@ -15,9 +15,11 @@ gem "dynamic_form"
 gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
 gem 'roo'
 gem 'will_paginate', '~> 3.0'
+gem 'omniauth-stripe-connect'
 
 group :development do
   gem "better_errors"
+  gem "certified"
 end
 
 # Gems used only for assets and not required

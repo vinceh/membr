@@ -104,6 +104,7 @@ class Membership < ActiveRecord::Base
   end
 
   def update_stripe_name
+    Stripe.api_key = self.user.stripe_token
     p = Stripe::Plan.retrieve(id.to_s)
     p.name = name
     p.save

@@ -9,6 +9,7 @@ class MembershipsController < ApplicationController
     m.user = current_user
 
     if m.save!
+      Stripe.api_key = current_user.stripe_token
       Stripe::Plan.create(
         :amount => m.fee,
         :interval => m.get_interval,

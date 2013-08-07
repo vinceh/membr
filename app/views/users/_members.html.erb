@@ -6,8 +6,8 @@
       You don't have any memberships.  Navigate to the memberships tab and create one!
     </p>
 
-    <div class="member-help-panel" ng-show="memberships.length > 0 && hasPublicMemberships()">
-      <div class="public-link-wrap helper">
+    <div class="member-help-panel" ng-show="memberships.length > 0">
+      <div class="public-link-wrap helper" ng-show="hasPublicMemberships()">
         <div class="icon">
           <%= image_tag 'achievement.png' %>
         </div>
@@ -17,7 +17,7 @@
           <input type="text" value=<%= request.protocol + request.host_with_port + public_invite_path(current_user.id) %> readonly>
         </div>
       </div>
-      <div class="invite-button-wrap helper" ng-show="memberships.length > 0">
+      <div class="invite-button-wrap helper">
         <div class="icon">
           <%= image_tag 'achievement.png' %>
         </div>
@@ -27,7 +27,7 @@
       </div>
     </div>
 
-    <hr/>
+    <hr ng-show="members.length > 0"/>
 
     <table id="members" ng-hide="members.length == 0">
       <thead>

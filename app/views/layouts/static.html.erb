@@ -19,7 +19,7 @@
     <% end %>
 
     <div class="links">
-      <a class="invite-link">Request an Invite</a>
+      <%= yield :links %>
     </div>
   </div>
 </div>
@@ -28,8 +28,8 @@
 
 <div class="main-footer">
   <div class="container static-cont">
-    <%= link_to "ABOUT", terms_path %>
-    <%= link_to "TERMS", terms_path %>
+    <%= link_to "ABOUT", about_path %>
+    <%= link_to "TERMS & PRIVACY", terms_path %>
     <%= link_to "FAQ", faq_path %>
   </div>
 </div>

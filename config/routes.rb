@@ -17,6 +17,7 @@ Membr::Application.routes.draw do
   root :to => "home#index"
 
   get 'success' => 'home#success', :as => :success
+  get 'about' => 'home#about', :as => :about
   get 'error' => 'home#error', :as => :error
   get 'terms' => 'home#terms', :as => :terms
   get 'faq' => 'home#faq', :as => :faq

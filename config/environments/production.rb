@@ -65,5 +65,5 @@ Membr::Application.configure do
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
-  config.middleware.use Rack::SslEnforcer, :only => ['/users/auth/stripe_connect/callback', '/stripe-event']
+  config.middleware.use Rack::SslEnforcer
 end

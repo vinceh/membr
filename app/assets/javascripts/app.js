@@ -235,7 +235,7 @@ function AppCtrl($scope, $location, $http, User, Membership, Member, $q, $timeou
   };
 
   $scope.hasPublicMemberships = function() {
-    if ($scope.memberships.length == 0) return false;
+    if ($scope.memberships && $scope.memberships.length == 0) return false;
 
     return _.where($scope.memberships, {is_private: false}).length > 0
   }

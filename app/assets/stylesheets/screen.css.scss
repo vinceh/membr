@@ -70,17 +70,17 @@ p {
 }
 
 a {
-  color: #777;
+  color: #444;
   @include font-light;
   text-decoration: none;
   font-size: 14px;
   &:visited {
-    color: #777;
+    color: #444;
     text-decoration: none;
   }
   &:hover {
     cursor: pointer;
-    color: #333;
+    color: #222;
   }
 }
 
@@ -1660,6 +1660,7 @@ hr {
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  margin-bottom: 30px;
 }
 
 .stripe-connect span {

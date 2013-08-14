@@ -78,7 +78,7 @@ function AppCtrl($scope, $location, $http, User, Membership, Member, $q, $timeou
   }
 
   $scope.editMembership = function(m, index) {
-    $scope.memberEdit = jQuery.extend({}, m);;
+    $scope.memberEdit = $.extend(true, {}, m);
     $scope.memberEdit.listIndex = index;
     $('.membership-edit').appendTo($('#membership'+index));
     $scope.memberEditOpen = true;

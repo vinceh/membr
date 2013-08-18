@@ -542,6 +542,13 @@ h3 {
   }
 }
 
+.form-header {
+  img {
+    margin: 10px;
+    height: 25px;
+  }
+}
+
 .main-header {
   padding: 20px 0;
   img {
@@ -1050,6 +1057,9 @@ h3 {
     input[type="text"] {
       margin: 0;
       width: 350px;
+    }
+    .billing-help {
+      margin: 20px 0;
     }
     .personal-info, .billing {
       h3 {
@@ -1834,5 +1844,19 @@ only screen and (min-device-pixel-ratio: 1.5) {
   }
   p {
     margin-bottom: 30px;
+  }
+}
+
+.secured {
+  @include font-light;
+  font-size: 14px;
+  color: #999;
+  img {
+    position: relative;
+    top: 2px;
+    height: 15px;
+    opacity: 0.5;
+    margin-left: 10px;
+    margin-right: 2px;
   }
 }

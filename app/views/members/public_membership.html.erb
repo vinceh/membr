@@ -35,10 +35,15 @@
         <h3>Billing</h3>
         <p>You will be charged <span class="bold">$</span></p>
       </div>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent lobortis metus dui, nec egestas nibh scelerisque in. </p>
+      <p class="billing-help">After you enter your payment details, you will be charged immediately and an invoice will be sent to your email.  If you have any questions or concerns contact <%= @user.organization %> at <a href="mailto:<%= @user.email %>"><%= @user.email %></a></p>
+
+      <p class="billing-help">By signing up you agree to Membr's <%= link_to "Terms & Privacy", terms_url %></p>
       <script src="https://checkout.stripe.com/v2/checkout.js" class="stripe-button"
               data-key="<%= @user.stripe_public_key %>"></script>
       <%= image_tag "outline.png", :class => "stripe" %>
+      <span class="secured">
+        <%= image_tag "lock.png" %> Secure Connection
+      </span>
     <% end %>
   </div>
 </div>

@@ -9,7 +9,7 @@
     <span class="amount"><%= @creatable.membership.display_fee %></span>
     <%= "/#{@creatable.membership.renewal_text}" %>
   </span>
-  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent lobortis metus dui, nec egestas nibh scelerisque in. </p>
+  <p>You've been invited to join <%= @creatable.membership.name %>!  This page will expire on <%= (@creatable.created_at + 7.days).strftime("%b %d, %Y") %>, so be sure to fill out your information to join the membership on time!</p>
 
   <div class="invite-wrap">
     <%= form_for @member, :url => members_create_path(:creatable_id => @creatable.id) do |f| %>
@@ -33,12 +33,17 @@
         <h3>Billing</h3>
         <p>You will be charged <span class="bold"><%= "#{@creatable.membership.display_fee}/#{@creatable.membership.renewal_text}" %></span></p>
       </div>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent lobortis metus dui, nec egestas nibh scelerisque in. </p>
+      <p class="billing-help">After you enter your payment details, you will be charged immediately and an invoice will be sent to your email.  If you have any questions or concerns contact <%= @creatable.membership.user.organization %> at <a href="mailto:<%= @creatable.membership.user.email %>"><%= @creatable.membership.user.email %></a></p>
+
+      <p class="billing-help">By signing up you agree to Membr's <%= link_to "Terms & Privacy", terms_url %></p>
       <script src="https://checkout.stripe.com/v2/checkout.js" class="stripe-button"
               data-key="<%= @creatable.membership.user.stripe_public_key %>"
               data-amount="<%= @creatable.membership.fee %>"
               data-description="<%= @creatable.membership.name + " - #{@creatable.membership.display_fee}/#{@creatable.membership.renewal_text}"%>"></script>
       <%= image_tag "outline.png", :class => "stripe" %>
+      <span class="secured">
+        <%= image_tag "lock.png" %> Secure Connection
+      </span>
     <% end %>
   </div>
 </div>

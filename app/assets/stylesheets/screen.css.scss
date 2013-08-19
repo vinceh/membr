@@ -566,7 +566,9 @@ h3 {
 .hero {
   background-image: url("bees.jpg");
   background-position: center;
-  backbround-size: contain;
+  backbround-size: cover;
+  background-attachment:fixed;
+  @include box-shadow(inset 0 0 25px #666);
   height: 500px;
   color: white;
   @include font-light;
@@ -578,6 +580,7 @@ h3 {
     margin-bottom: 20px;
     padding-top: 160px;
     line-height: 1.2em;
+    @include text-shadow(0 0 10px #444);
   }
   span {
     margin-left: 15px;

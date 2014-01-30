@@ -6,7 +6,7 @@ gem 'rails', '3.2.13'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'pg'
-gem 'devise'
+gem 'devise', '~> 2.2.4'
 gem 'paperclip'
 gem 'aws-s3'
 gem 'aws-sdk'

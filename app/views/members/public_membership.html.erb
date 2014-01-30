@@ -39,7 +39,7 @@
 
       <p class="billing-help">By signing up you agree to Membr's <%= link_to "Terms & Privacy", terms_url %></p>
       <script src="https://checkout.stripe.com/v2/checkout.js" class="stripe-button"
-              data-key="<%= @user.stripe_public_key %>"></script>
+              data-key="<%= @user.stripe_public_key %>" data-name="<%= @user.organization %>" data-description="Secure checkout"></script>
       <%= image_tag "outline.png", :class => "stripe" %>
       <span class="secured">
         <%= image_tag "lock.png" %> Secure Connection
@@ -52,14 +52,14 @@
   $(window).load(function() {
     $('#membership').change(function() {
       var selected = $(this).find(':selected');
-      changeMembership(selected.text(), selected.attr('data-amount'), selected.attr('data-renewal'));
+      changeMembership(selected.text(), selected.attr('data-amount'), selected.attr('data-renewal'), selected.attr('data-stripe-amount'));
     });
 
     $('#membership').trigger('change');
     $('#membership').customSelect();
   });
 
-  function changeMembership(name, fee, renewal) {
+  function changeMembership(name, fee, renewal, stripeAmount) {
     var billing = $('.billing');
     billing.find('.bold').html(fee+'/'+renewal);
     var billing = $('.fee');

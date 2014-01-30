@@ -4,7 +4,8 @@
 <% end %>
 
 <div class="container join">
-  <h1><%= @creatable.membership.name %></h1>
+  <h1>Join Up</h1>
+  <h2 class="sub"><%= @creatable.membership.name %></h2>
   <span class="fee">
     <span class="amount"><%= @creatable.membership.display_fee %></span>
     <%= "/#{@creatable.membership.renewal_text}" %>

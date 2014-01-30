@@ -1028,6 +1028,9 @@ h3 {
     line-height: 90px;
     @include shadow;
   }
+  .sub {
+    margin-bottom: 5px;
+  }
   .fee {
     position: absolute;
     right: 0;

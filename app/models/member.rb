@@ -6,6 +6,7 @@ class Member < ActiveRecord::Base
   validates_presence_of :membership_id, :email
   validates_presence_of :full_name, :street_address, :city, :state, :country, :zipcode, :phone, :if => "!developer"
   attr_accessible :membership_id, :full_name, :email, :street_address, :city, :state, :country, :zipcode, :phone, :developer, :paid, :active, :plan_ending_date, :cancel_at_period_end, :organization, :title, :work_number
+  attr_accessible :coupon
 
   def to_json
     {
@@ -137,13 +138,15 @@ class Member < ActiveRecord::Base
     end
   end
 
-  def join_membership(membership, token)
+  def join_membership(membership, token, coupon)
     begin
       Stripe.api_key = membership.user.stripe_token
+
       customer = Stripe::Customer.create(
         :card  => token,
         :plan => membership.id,
-        :email => email
+        :email => email,
+        :coupon => (coupon != "" && coupon || nil)
       )
 
       self.stripe_customer_id = customer.id
@@ -152,7 +155,8 @@ class Member < ActiveRecord::Base
 
       MemberMailer.joined_membership(self, membership).deliver
       true
-    rescue Stripe::CardError => e
+    rescue Stripe::InvalidRequestError => e
+      errors.add(:coupon, "#{coupon} does not exist!")
       nil
     end
   end

@@ -14,6 +14,8 @@
 
   <div class="invite-wrap">
     <%= form_for @member, :url => members_create_path(:creatable_id => @creatable.id) do |f| %>
+      <%= text_field_tag "coupon", nil, :placeholder => "Coupon Code" %>
+
       <%= f.error_messages %>
       <div class="personal-info">
         <h3>Personal Information</h3>

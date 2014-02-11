@@ -15,6 +15,7 @@
   <div class="invite-wrap">
     <%= form_for @member, :url => members_public_create_path do |f| %>
       <%= select_tag "membership", membership_options(@user.active_memberships)%>
+      <%= text_field_tag "coupon", nil, :placeholder => "Coupon Code" %>
       <%= f.error_messages %>
       <div class="personal-info">
         <h3>Personal Information</h3>

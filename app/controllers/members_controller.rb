@@ -18,21 +18,19 @@ class MembersController < ApplicationController
     if request.post?
       creatable = Creatable.find(params[:creatable_id])
       membership = creatable.membership
-
       if membership
+
         @member = Member.new(params[:member])
         @member.developer = false
         @member.membership = membership
 
-        if @member.valid? && @member.join_membership(membership, params[:stripeToken])
+        if @member.valid? && @member.join_membership(membership, params[:stripeToken], params[:coupon])
           creatable.destroy
           render_success({
              :message => "You have successfully joined a membership.  Contact the membership owner if you have any questions.",
              :route => root_url
            })
         else
-          flash[:error] = e.message
-          redirect_to charges_path
         end
       end
     end
@@ -65,15 +63,14 @@ class MembersController < ApplicationController
         @member.developer = false
         @member.membership = membership
 
-        if @member.valid? && @member.join_membership(membership, params[:stripeToken])
+        if @member.valid? && @member.join_membership(membership, params[:stripeToken], params[:coupon])
 
           render_success({
                            :message => "You have successfully joined a membership.  Contact the membership owner if you have any questions.",
                            :route => root_url
                          })
         else
-          flash[:error] = e.message
-          redirect_to charges_path
+
         end
       end
     end

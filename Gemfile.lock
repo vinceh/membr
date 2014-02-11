@@ -47,7 +47,6 @@ GEM
       json (~> 1.4)
       nokogiri (<= 1.5.0)
       uuidtools (~> 2.1)
-    bcrypt-ruby (3.0.1)
     bcrypt-ruby (3.0.1-x86-mingw32)
     better_errors (0.8.0)
       coderay (>= 1.0.0)
@@ -73,7 +72,7 @@ GEM
       sass (~> 3.1)
     compass-rails (1.0.3)
       compass (>= 0.12.2, < 0.14)
-    devise (2.2.3)
+    devise (2.2.4)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.1)
       railties (~> 3.1)
@@ -205,7 +204,7 @@ DEPENDENCIES
   certified
   coffee-rails (~> 3.2.1)
   compass-rails
-  devise
+  devise (~> 2.2.4)
   dynamic_form
   jquery-rails
   omniauth-stripe-connect

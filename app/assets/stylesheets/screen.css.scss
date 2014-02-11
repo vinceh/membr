@@ -1024,6 +1024,9 @@ h3 {
 .join {
   margin-top: 100px;
   position: relative;
+  #coupon {
+    margin-top: 10px;
+  }
   h1 {
     line-height: 90px;
     @include shadow;
@@ -1089,6 +1092,9 @@ h3 {
     h2 {
       color: $error;
       margin-bottom: 15px;
+    }
+    ul {
+      margin-bottom: 0;
     }
     li {
       @include font-light;
